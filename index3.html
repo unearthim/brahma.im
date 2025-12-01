@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Cosmic Breath: A Digital Monument to Creation (Brahma.im)</title>
+    <!-- SEO Optimization -->
+    <meta name="description" content="An interactive digital monument inspired by Brahma, the Hindu god of creation, visualizing the cosmic cycles of universal expansion and contraction. Contribute your thoughts to the eternal breath.">
+    <meta name="keywords" content="Brahma, Brahman, digital monument, Hindu creation, cosmic cycle, consciousness, interactive art, three.js">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        /* Custom styles for the dark, immersive aesthetic */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d18; /* Very dark blue/purple */
+            color: #f0f0ff; /* Off-white for text */
+            overflow: hidden; /* Hide scrollbars for the full-screen experience */
+        }
+
+        #container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #ui-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Allows clicks to pass through to the canvas by default */
+        }
+
+        .card {
+            background-color: rgba(18, 18, 30, 0.95);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(100, 100, 150, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            pointer-events: auto; /* Re-enable pointer events for the UI elements */
+        }
+
+        .button-primary {
+            background: linear-gradient(145deg, #7c3aed, #9333ea);
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(147, 51, 234, 0.4);
+        }
+
+        .button-primary:hover {
+            background: linear-gradient(145deg, #6d28d9, #8b5cf6);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(147, 51, 234, 0.6);
+        }
+    </style>
+    <script type="module">
+        // Updated Firebase SDK version to 12.6.0
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, limit, serverTimestamp, setLogLevel } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+        // Set Firebase Log Level to debug for development/testing
+        setLogLevel('debug');
+
+        // --- GLOBAL FIREBASE/APP CONFIG ---
+        // Safely access environment variables, falling back to defaults if not defined.
+        const appId = typeof window.__app_id !== 'undefined' ? window.__app_id : 'cosmic-breath-monument';
+        let firebaseConfig = {};
+        try {
+            firebaseConfig = typeof window.__firebase_config !== 'undefined' ? JSON.parse(window.__firebase_config) : {};
+        } catch (e) {
+            console.error("Error parsing firebase config:", e);
+        }
+        const initialAuthToken = typeof window.__initial_auth_token !== 'undefined' ? window.__initial_auth_token : null;
+
+
+        let db, auth, userId = null;
+        let appInitialized = false;
+
+        // --- UI ELEMENTS ---
+        const contributionForm = document.getElementById('contribution-form');
+        const contributionInput = document.getElementById('contribution-input');
+        const contributionCount = document.getElementById('contribution-count');
+        const recentContributionsList = document.getElementById('recent-contributions');
+        const statusMessage = document.getElementById('status-message');
+
+        // --- 3D / THREE.js SETUP ---
+        let scene, camera, renderer;
+        let stars = [];
+        let geometry, material, points;
+        const totalStars = 50000;
+        let isExpanding = true;
+        let particles = [];
+        let particleGeometry, particleMaterial;
+
+        // --- Utility Functions ---
+
+        /**
+         * Initializes Firebase and authenticates the user.
+         */
+        async function initializeFirebase() {
+            try {
+                if (Object.keys(firebaseConfig).length === 0) {
+                    // This error indicates the Firebase config was not provided by the environment
+                    throw new Error("Firebase configuration is missing or empty. Cannot connect to database.");
+                }
+
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                // Authenticate
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                userId = auth.currentUser?.uid || 'anonymous-' + crypto.randomUUID();
+                appInitialized = true;
+                console.log('Firebase initialized. User ID:', userId);
+
+                // Start listening to the data after successful auth
+                startDataListener();
+            } catch (error) {
+                console.error("Firebase initialization or authentication failed:", error);
+                statusMessage.textContent = 'Error: Database connection failed. Try refreshing.';
+            }
+        }
+
+        /**
+         * Converts hex to a THREE.js Color
+         * @param {string} hex Hex color string (e.g., '#ffffff')
+         * @returns {THREE.Color}
+         */
+        function hexToColor(hex) {
+            const color = new THREE.Color();
+            color.set(hex);
+            return color;
+        }
+
+        // --- Data Handling ---
+
+        /**
+         * Adds a new contribution (thought/intention) to Firestore.
+         * @param {string} text The user's input.
+         */
+        async function saveContribution(text) {
+            if (!appInitialized) {
+                statusMessage.textContent = 'System initializing... please wait.';
+                return;
+            }
+            if (!text.trim()) {
+                statusMessage.textContent = 'Please enter a thought before submitting.';
+                return;
+            }
+
+            // Path for public data: /artifacts/{appId}/public/data/contributions
+            const collectionPath = `artifacts/${appId}/public/data/contributions`;
+
+            try {
+                // Show a loading message
+                statusMessage.textContent = 'Sending thought into the Cosmos...';
+                contributionForm.querySelector('button').disabled = true;
+
+                await addDoc(collection(db, collectionPath), {
+                    text: text.substring(0, 140), // Truncate to 140 chars
+                    userId: userId,
+                    timestamp: serverTimestamp()
+                });
+
+                contributionInput.value = ''; // Clear the input field
+                statusMessage.textContent = 'Thought received. It is now part of the Cosmic Breath.';
+
+                // Trigger a temporary expansion burst in the 3D visualization
+                triggerCosmicBurst();
+
+            } catch (e) {
+                console.error("Error adding document: ", e);
+                statusMessage.textContent = 'Error sending thought. Check console for details.';
+            } finally {
+                contributionForm.querySelector('button').disabled = false;
+                setTimeout(() => {
+                    statusMessage.textContent = '';
+                }, 3000);
+            }
+        }
+
+        /**
+         * Sets up a real-time listener for the latest contributions and updates the UI.
+         */
+        function startDataListener() {
+            const collectionPath = `artifacts/${appId}/public/data/contributions`;
+            // Note: Firebase `orderBy` requires an index, which we can't create.
+            // Since we only limit to 5, we rely on Firebase to fetch the latest.
+            // If fetching fails due to missing index, we should comment out orderBy and sort client-side.
+            // For now, let's keep it with a client-side sort backup if needed.
+            const q = query(collection(db, collectionPath), orderBy("timestamp", "desc"), limit(5));
+
+            // Listener for total count
+            onSnapshot(collection(db, collectionPath), (snapshot) => {
+                // Update total contribution count
+                contributionCount.textContent = snapshot.size;
+            });
+
+            // Listener for recent contributions
+            onSnapshot(q, (snapshot) => {
+                recentContributionsList.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const li = document.createElement('li');
+                    li.className = 'text-sm mb-1 p-2 bg-gray-800 bg-opacity-50 rounded-lg transition duration-200 hover:bg-opacity-80';
+                    li.textContent = `"${data.text}"`;
+                    recentContributionsList.appendChild(li);
+
+                    // Add a tiny particle for each new thought
+                    addParticle(data.text);
+                });
+            });
+        }
+
+        // --- 3D Visualization Logic ---
+
+        function initThreeJS() {
+            const container = document.getElementById('container');
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+
+            // Scene
+            scene = new THREE.Scene();
+            scene.fog = new THREE.Fog(0x0d0d18, 10, 1500);
+
+            // Camera
+            camera = new THREE.PerspectiveCamera(75, width / height, 1, 3000);
+            camera.position.z = 1000;
+
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(width, height);
+            container.appendChild(renderer.domElement);
+
+            // Create the Starfield (The Universe/Brahman)
+            geometry = new THREE.BufferGeometry();
+            const positions = [];
+            const colors = [];
+            const color1 = hexToColor('#800080'); // Deep Purple
+            const color2 = hexToColor('#4b0082'); // Indigo
+
+            for (let i = 0; i < totalStars; i++) {
+                // Create points in a spherical volume
+                const radius = Math.random() * 800 + 100;
+                const theta = Math.random() * Math.PI * 2;
+                const phi = Math.acos(Math.random() * 2 - 1);
+
+                positions.push(radius * Math.sin(phi) * Math.cos(theta)); // X
+                positions.push(radius * Math.sin(phi) * Math.sin(theta)); // Y
+                positions.push(radius * Math.cos(phi)); // Z
+
+                // Assign gradient color
+                const color = new THREE.Color();
+                color.lerpColors(color1, color2, Math.random());
+                colors.push(color.r, color.g, color.b);
+            }
+
+            geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+
+            material = new THREE.PointsMaterial({
+                size: 2,
+                vertexColors: true,
+                blending: THREE.AdditiveBlending,
+                transparent: true,
+                opacity: 0.8
+            });
+
+            points = new THREE.Points(geometry, material);
+            scene.add(points);
+
+            // Particle System for Contributions (The Breath)
+            particleGeometry = new THREE.BufferGeometry();
+            particleMaterial = new THREE.PointsMaterial({
+                size: 5,
+                color: 0xffa500, // Orange/Gold for Creation Energy
+                blending: THREE.AdditiveBlending,
+                transparent: true,
+                sizeAttenuation: true
+            });
+            // Initial render of particle system (empty)
+            scene.add(new THREE.Points(particleGeometry, particleMaterial));
+
+            window.addEventListener('resize', onWindowResize, false);
+            animate();
+        }
+
+        /**
+         * Resizes the canvas and camera when the window size changes.
+         */
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        /**
+         * Adds a single particle representing a new contribution.
+         * @param {string} text The contribution text.
+         */
+        function addParticle(text) {
+            const startPosition = new THREE.Vector3(
+                (Math.random() - 0.5) * 10,
+                (Math.random() - 0.5) * 10,
+                (Math.random() - 0.5) * 10
+            );
+
+            // The target position is the edge of the universe (expansion point)
+            const targetRadius = 1500;
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos(Math.random() * 2 - 1);
+            const targetPosition = new THREE.Vector3(
+                targetRadius * Math.sin(phi) * Math.cos(theta),
+                targetRadius * Math.sin(phi) * Math.sin(theta),
+                targetRadius * Math.cos(phi)
+            );
+
+            particles.push({
+                position: startPosition,
+                velocity: targetPosition.clone().sub(startPosition).normalize().multiplyScalar(5), // Constant speed outwards
+                lifetime: 0,
+                maxLifetime: 300, // Frames
+                text: text,
+                color: new THREE.Color(0xffa500)
+            });
+        }
+
+        /**
+         * Triggers a visual burst, temporarily speeding up the expansion phase.
+         */
+        function triggerCosmicBurst() {
+            isExpanding = true;
+            // The expansion rate will be momentarily increased in the animation loop
+        }
+
+        /**
+         * Main animation loop for the 3D visualization.
+         */
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // 1. Rotate the starfield (The Universal Consciousness)
+            points.rotation.y += 0.0002;
+            points.rotation.x += 0.0001;
+
+            // 2. Animate the Cosmic Breath (Expansion/Contraction)
+            const positions = points.geometry.attributes.position.array;
+            let centerMass = 0; // Sum of squares of positions / number of points
+            let expansionFactor = 0.0005; // Base rate of expansion/contraction
+
+            // If we just had a contribution, expand faster (the 'burst')
+            if (isExpanding) {
+                expansionFactor *= 2;
+            }
+
+            for (let i = 0; i < totalStars; i++) {
+                const i3 = i * 3;
+                const x = positions[i3];
+                const y = positions[i3 + 1];
+                const z = positions[i3 + 2];
+
+                const distance = Math.sqrt(x * x + y * y + z * z);
+                centerMass += distance * distance;
+
+                // Scale positions based on phase
+                const scale = 1.0 + (isExpanding ? expansionFactor : -expansionFactor);
+
+                positions[i3] *= scale;
+                positions[i3 + 1] *= scale;
+                positions[i3 + 2] *= scale;
+            }
+
+            points.geometry.attributes.position.needsUpdate = true;
+
+            // Check average mass/size to decide on the next phase
+            const avgRadiusSq = centerMass / totalStars;
+            const maxRadiusSq = 500 * 500 * 1.5; // Threshold for max expansion
+
+            if (isExpanding && avgRadiusSq > maxRadiusSq) {
+                // If max size reached, start contracting (The Dissolution/Pralaya)
+                isExpanding = false;
+                console.log('Beginning Pralaya (Contraction)');
+            } else if (!isExpanding && avgRadiusSq < 500 * 500 * 0.5) {
+                // If min size reached, start expanding (The Creation/Kalpa)
+                isExpanding = true;
+                console.log('Beginning Kalpa (Expansion)');
+            }
+
+            // Update UI with the current phase
+            document.getElementById('cosmic-phase').textContent = isExpanding ? 'Kalpa (Creation/Expansion)' : 'Pralaya (Dissolution/Contraction)';
+            document.getElementById('cosmic-phase').classList.toggle('text-purple-400', isExpanding);
+            document.getElementById('cosmic-phase').classList.toggle('text-red-400', !isExpanding);
+
+
+            // 3. Animate Contribution Particles
+            const particlePositions = [];
+            particles = particles.filter(p => {
+                p.lifetime++;
+                if (p.lifetime > p.maxLifetime) return false; // Particle expires
+
+                p.position.add(p.velocity.clone().multiplyScalar(1)); // Move particle
+
+                particlePositions.push(p.position.x, p.position.y, p.position.z);
+
+                // Fade out the particle as it approaches max lifetime
+                const fadeFactor = 1 - (p.lifetime / p.maxLifetime);
+                // Note: The color property in the particle object is currently unused for rendering efficiency
+                // but can be used if a custom shader or material per particle is implemented.
+                // For this simple setup, we just let the material fade.
+
+                return true;
+            });
+
+            // Update particle system
+            if (particlePositions.length > 0) {
+                particleGeometry.setAttribute('position', new THREE.Float32BufferAttribute(particlePositions, 3));
+                particleGeometry.attributes.position.needsUpdate = true;
+
+                // Update material opacity based on the oldest particle to manage overall particle system fade
+                const firstParticle = particles[0];
+                if (firstParticle) {
+                    particleMaterial.opacity = 1 - (firstParticle.lifetime / firstParticle.maxLifetime);
+                }
+            } else if (particleGeometry.attributes.position) {
+                // Clear particles when none are left
+                particleGeometry.setAttribute('position', new THREE.Float32BufferAttribute([], 3));
+                particleGeometry.attributes.position.needsUpdate = true;
+                particleMaterial.opacity = 0;
+            }
+
+
+            // 4. Render the scene
+            renderer.render(scene, camera);
+        }
+
+        // --- Event Listeners ---
+        contributionForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            saveContribution(contributionInput.value);
+        });
+
+        // Initialize on window load
+        window.onload = function() {
+            initializeFirebase();
+            initThreeJS();
+        };
+
+    </script>
+</head>
+<body>
+    <!-- 3D Canvas Container -->
+    <div id="container"></div>
+
+    <!-- UI Overlay -->
+    <div id="ui-overlay" class="p-4 sm:p-8 flex flex-col justify-between">
+
+        <!-- Top Header & Status -->
+        <header class="text-center">
+            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tighter text-white drop-shadow-lg">
+                The Cosmic Breath: <span class="text-purple-400">brahma.im</span>
+            </h1>
+            <p class="mt-1 text-sm sm:text-base text-gray-400">
+                A Monument to Universal Creation and Dissolution
+            </p>
+            <div class="mt-4 flex flex-wrap justify-center space-x-4 text-sm font-mono">
+                <div class="card p-2">Total Thoughts: <span id="contribution-count" class="font-bold text-yellow-300">0</span></div>
+                <div class="card p-2">Current Phase: <span id="cosmic-phase" class="font-bold text-purple-400">Initializing...</span></div>
+            </div>
+        </header>
+
+        <!-- Main Content (Centered) - Hidden in this version to focus on submission -->
+        <!-- Future enhancement: Display major universal events here -->
+
+        <!-- Bottom Panel: Contribution Form and Recent Activity -->
+        <div class="flex flex-col lg:flex-row justify-center lg:space-x-8 mt-8">
+
+            <!-- Contribution Form Card (Input) -->
+            <div class="card p-6 w-full max-w-lg mb-6 lg:mb-0">
+                <h2 class="text-xl font-semibold mb-3 text-purple-300">Contribute Your Thought (Sankalpa)</h2>
+                <p class="text-sm text-gray-400 mb-4">
+                    Send a small thought, intention, or idea into the digital cosmos. Your contribution fuels the current cycle of creation (Kalpa). (Max 140 chars)
+                </p>
+                <form id="contribution-form" class="space-y-4">
+                    <input
+                        type="text"
+                        id="contribution-input"
+                        placeholder="e.g., 'May there be kindness in the next cycle.'"
+                        maxlength="140"
+                        class="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        required
+                    >
+                    <button
+                        type="submit"
+                        class="button-primary w-full p-3 rounded-lg text-lg font-bold"
+                    >
+                        SEND INTO THE COSMOS
+                    </button>
+                    <p id="status-message" class="text-sm text-center text-yellow-300 h-5"></p>
+                </form>
+            </div>
+
+            <!-- Recent Contributions Card (Output) -->
+            <div class="card p-6 w-full max-w-sm">
+                <h2 class="text-xl font-semibold mb-3 text-yellow-300">Recent Echos</h2>
+                <p class="text-sm text-gray-400 mb-4">
+                    The latest intentions received from other contributors.
+                </p>
+                <ul id="recent-contributions" class="space-y-1">
+                    <li class="text-sm text-gray-500">Awaiting first contributions...</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

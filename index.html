@@ -3,526 +3,468 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Cosmic Breath: A Digital Monument to Creation (Brahma.im)</title>
-    <!-- SEO Optimization -->
-    <meta name="description" content="An interactive digital monument inspired by Brahma, the Hindu god of creation, visualizing the cosmic cycles of universal expansion and contraction. Contribute your thoughts to the eternal breath.">
-    <meta name="keywords" content="Brahma, Brahman, digital monument, Hindu creation, cosmic cycle, consciousness, interactive art, three.js">
+
+    <!-- === 1. Primary Meta Tags === -->
+    <title>BRAHMA.IM • Eternal Emergence</title>
+    <meta name="title" content="BRAHMA.IM • Eternal Emergence">
+    <meta name="description" content="An interactive digital monument exploring Brahma as eternal creative emergence. Experience the cosmic dance of creation through sacred geometry and generative art.">
+    <meta name="keywords" content="Brahma, Hindu philosophy, sacred geometry, mandala, digital art, generative art, cosmic consciousness, interactive art, unearth.im">
+    <meta name="author" content="brahma.im (An unearth.im Project)">
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="English">
+
+    <!-- Canonical Link -->
+    <link rel="canonical" href="https://brahma.im" />
+
+    <!-- === 2. Webmention Endpoint === -->
+    <link rel="webmention" href="https://webmention.io/unearth.im/webmention" />
+
+    <!-- === 3. Open Graph / Facebook === -->
+    <meta property="og:title" content="BRAHMA.IM • Eternal Emergence">
+    <meta property="og:description" content="An interactive digital monument exploring Brahma as eternal creative emergence. Experience the cosmic dance of creation through sacred geometry and generative art.">
+    <meta property="og:image" content="https://brahma.im/og-image.png">
+    <meta property="og:site_name" content="brahma.im">
+    <meta property="og:url" content="https://brahma.im">
+    <meta property="og:type" content="website">
+
+    <!-- === 4. Twitter Card === -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://brahma.im">
+    <meta name="twitter:title" content="BRAHMA.IM • Eternal Emergence">
+    <meta name="twitter:description" content="An interactive digital monument exploring Brahma as eternal creative emergence. Experience the cosmic dance of creation through sacred geometry and generative art.">
+    <meta name="twitter:image" content="https://brahma.im/og-image.png">
+
+    <!-- === 5. Favicons === -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="alternate icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Brand Color Meta Tags -->
+    <meta name="theme-color" content="#05050F">
+    <meta name="msapplication-TileColor" content="#05050F">
+
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
     <style>
-        /* Custom styles for the dark, immersive aesthetic */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0d0d18; /* Very dark blue/purple */
-            color: #f0f0ff; /* Off-white for text */
-            overflow: hidden; /* Hide scrollbars for the full-screen experience */
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         }
-
-        #container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+        
+        canvas {
+            display: block;
         }
-
-        #ui-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none; /* Allows clicks to pass through to the canvas by default */
+        
+        .modal-content::-webkit-scrollbar {
+            width: 8px;
         }
-
-        .card {
-            background-color: rgba(18, 18, 30, 0.95);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(100, 100, 150, 0.5);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            pointer-events: auto; /* Re-enable pointer events for the UI elements */
+        
+        .modal-content::-webkit-scrollbar-track {
+            background: #1f2937;
         }
-
-        .button-primary {
-            background: linear-gradient(145deg, #7c3aed, #9333ea);
-            border: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(147, 51, 234, 0.4);
+        
+        .modal-content::-webkit-scrollbar-thumb {
+            background: #4b5563;
+            border-radius: 4px;
         }
-
-        .button-primary:hover {
-            background: linear-gradient(145deg, #6d28d9, #8b5cf6);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(147, 51, 234, 0.6);
+        
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background: #6b7280;
         }
     </style>
-    <script type="module">
-        // Updated Firebase SDK version to 12.6.0
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, limit, serverTimestamp, setLogLevel } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
-
-        // Set Firebase Log Level to debug for development/testing
-        setLogLevel('debug');
-
-        // --- GLOBAL FIREBASE/APP CONFIG ---
-        // Safely access environment variables, falling back to defaults if not defined.
-        const appId = typeof window.__app_id !== 'undefined' ? window.__app_id : 'cosmic-breath-monument';
-        let firebaseConfig = {};
-        try {
-            firebaseConfig = typeof window.__firebase_config !== 'undefined' ? JSON.parse(window.__firebase_config) : {};
-        } catch (e) {
-            console.error("Error parsing firebase config:", e);
-        }
-        const initialAuthToken = typeof window.__initial_auth_token !== 'undefined' ? window.__initial_auth_token : null;
-
-
-        let db, auth, userId = null;
-        let appInitialized = false;
-
-        // --- UI ELEMENTS ---
-        const contributionForm = document.getElementById('contribution-form');
-        const contributionInput = document.getElementById('contribution-input');
-        const contributionCount = document.getElementById('contribution-count');
-        const recentContributionsList = document.getElementById('recent-contributions');
-        const statusMessage = document.getElementById('status-message');
-
-        // --- 3D / THREE.js SETUP ---
-        let scene, camera, renderer;
-        let stars = [];
-        let geometry, material, points;
-        const totalStars = 50000;
-        let isExpanding = true;
-        let particles = [];
-        let particleGeometry, particleMaterial;
-
-        // --- Utility Functions ---
-
-        /**
-         * Initializes Firebase and authenticates the user.
-         */
-        async function initializeFirebase() {
-            try {
-                if (Object.keys(firebaseConfig).length === 0) {
-                    // This error indicates the Firebase config was not provided by the environment
-                    throw new Error("Firebase configuration is missing or empty. Cannot connect to database.");
-                }
-
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-
-                // Authenticate
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
-                userId = auth.currentUser?.uid || 'anonymous-' + crypto.randomUUID();
-                appInitialized = true;
-                console.log('Firebase initialized. User ID:', userId);
-
-                // Start listening to the data after successful auth
-                startDataListener();
-            } catch (error) {
-                console.error("Firebase initialization or authentication failed:", error);
-                statusMessage.textContent = 'Error: Database connection failed. Try refreshing.';
-            }
-        }
-
-        /**
-         * Converts hex to a THREE.js Color
-         * @param {string} hex Hex color string (e.g., '#ffffff')
-         * @returns {THREE.Color}
-         */
-        function hexToColor(hex) {
-            const color = new THREE.Color();
-            color.set(hex);
-            return color;
-        }
-
-        // --- Data Handling ---
-
-        /**
-         * Adds a new contribution (thought/intention) to Firestore.
-         * @param {string} text The user's input.
-         */
-        async function saveContribution(text) {
-            if (!appInitialized) {
-                statusMessage.textContent = 'System initializing... please wait.';
-                return;
-            }
-            if (!text.trim()) {
-                statusMessage.textContent = 'Please enter a thought before submitting.';
-                return;
-            }
-
-            // Path for public data: /artifacts/{appId}/public/data/contributions
-            const collectionPath = `artifacts/${appId}/public/data/contributions`;
-
-            try {
-                // Show a loading message
-                statusMessage.textContent = 'Sending thought into the Cosmos...';
-                contributionForm.querySelector('button').disabled = true;
-
-                await addDoc(collection(db, collectionPath), {
-                    text: text.substring(0, 140), // Truncate to 140 chars
-                    userId: userId,
-                    timestamp: serverTimestamp()
-                });
-
-                contributionInput.value = ''; // Clear the input field
-                statusMessage.textContent = 'Thought received. It is now part of the Cosmic Breath.';
-
-                // Trigger a temporary expansion burst in the 3D visualization
-                triggerCosmicBurst();
-
-            } catch (e) {
-                console.error("Error adding document: ", e);
-                statusMessage.textContent = 'Error sending thought. Check console for details.';
-            } finally {
-                contributionForm.querySelector('button').disabled = false;
-                setTimeout(() => {
-                    statusMessage.textContent = '';
-                }, 3000);
-            }
-        }
-
-        /**
-         * Sets up a real-time listener for the latest contributions and updates the UI.
-         */
-        function startDataListener() {
-            const collectionPath = `artifacts/${appId}/public/data/contributions`;
-            // Note: Firebase `orderBy` requires an index, which we can't create.
-            // Since we only limit to 5, we rely on Firebase to fetch the latest.
-            // If fetching fails due to missing index, we should comment out orderBy and sort client-side.
-            // For now, let's keep it with a client-side sort backup if needed.
-            const q = query(collection(db, collectionPath), orderBy("timestamp", "desc"), limit(5));
-
-            // Listener for total count
-            onSnapshot(collection(db, collectionPath), (snapshot) => {
-                // Update total contribution count
-                contributionCount.textContent = snapshot.size;
-            });
-
-            // Listener for recent contributions
-            onSnapshot(q, (snapshot) => {
-                recentContributionsList.innerHTML = '';
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    const li = document.createElement('li');
-                    li.className = 'text-sm mb-1 p-2 bg-gray-800 bg-opacity-50 rounded-lg transition duration-200 hover:bg-opacity-80';
-                    li.textContent = `"${data.text}"`;
-                    recentContributionsList.appendChild(li);
-
-                    // Add a tiny particle for each new thought
-                    addParticle(data.text);
-                });
-            });
-        }
-
-        // --- 3D Visualization Logic ---
-
-        function initThreeJS() {
-            const container = document.getElementById('container');
-            const width = window.innerWidth;
-            const height = window.innerHeight;
-
-            // Scene
-            scene = new THREE.Scene();
-            scene.fog = new THREE.Fog(0x0d0d18, 10, 1500);
-
-            // Camera
-            camera = new THREE.PerspectiveCamera(75, width / height, 1, 3000);
-            camera.position.z = 1000;
-
-            // Renderer
-            renderer = new THREE.WebGLRenderer({ antialias: true });
-            renderer.setPixelRatio(window.devicePixelRatio);
-            renderer.setSize(width, height);
-            container.appendChild(renderer.domElement);
-
-            // Create the Starfield (The Universe/Brahman)
-            geometry = new THREE.BufferGeometry();
-            const positions = [];
-            const colors = [];
-            const color1 = hexToColor('#800080'); // Deep Purple
-            const color2 = hexToColor('#4b0082'); // Indigo
-
-            for (let i = 0; i < totalStars; i++) {
-                // Create points in a spherical volume
-                const radius = Math.random() * 800 + 100;
-                const theta = Math.random() * Math.PI * 2;
-                const phi = Math.acos(Math.random() * 2 - 1);
-
-                positions.push(radius * Math.sin(phi) * Math.cos(theta)); // X
-                positions.push(radius * Math.sin(phi) * Math.sin(theta)); // Y
-                positions.push(radius * Math.cos(phi)); // Z
-
-                // Assign gradient color
-                const color = new THREE.Color();
-                color.lerpColors(color1, color2, Math.random());
-                colors.push(color.r, color.g, color.b);
-            }
-
-            geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-            geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-
-            material = new THREE.PointsMaterial({
-                size: 2,
-                vertexColors: true,
-                blending: THREE.AdditiveBlending,
-                transparent: true,
-                opacity: 0.8
-            });
-
-            points = new THREE.Points(geometry, material);
-            scene.add(points);
-
-            // Particle System for Contributions (The Breath)
-            particleGeometry = new THREE.BufferGeometry();
-            particleMaterial = new THREE.PointsMaterial({
-                size: 5,
-                color: 0xffa500, // Orange/Gold for Creation Energy
-                blending: THREE.AdditiveBlending,
-                transparent: true,
-                sizeAttenuation: true
-            });
-            // Initial render of particle system (empty)
-            scene.add(new THREE.Points(particleGeometry, particleMaterial));
-
-            window.addEventListener('resize', onWindowResize, false);
-            animate();
-        }
-
-        /**
-         * Resizes the canvas and camera when the window size changes.
-         */
-        function onWindowResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        }
-
-        /**
-         * Adds a single particle representing a new contribution.
-         * @param {string} text The contribution text.
-         */
-        function addParticle(text) {
-            const startPosition = new THREE.Vector3(
-                (Math.random() - 0.5) * 10,
-                (Math.random() - 0.5) * 10,
-                (Math.random() - 0.5) * 10
-            );
-
-            // The target position is the edge of the universe (expansion point)
-            const targetRadius = 1500;
-            const theta = Math.random() * Math.PI * 2;
-            const phi = Math.acos(Math.random() * 2 - 1);
-            const targetPosition = new THREE.Vector3(
-                targetRadius * Math.sin(phi) * Math.cos(theta),
-                targetRadius * Math.sin(phi) * Math.sin(theta),
-                targetRadius * Math.cos(phi)
-            );
-
-            particles.push({
-                position: startPosition,
-                velocity: targetPosition.clone().sub(startPosition).normalize().multiplyScalar(5), // Constant speed outwards
-                lifetime: 0,
-                maxLifetime: 300, // Frames
-                text: text,
-                color: new THREE.Color(0xffa500)
-            });
-        }
-
-        /**
-         * Triggers a visual burst, temporarily speeding up the expansion phase.
-         */
-        function triggerCosmicBurst() {
-            isExpanding = true;
-            // The expansion rate will be momentarily increased in the animation loop
-        }
-
-        /**
-         * Main animation loop for the 3D visualization.
-         */
-        function animate() {
-            requestAnimationFrame(animate);
-
-            // 1. Rotate the starfield (The Universal Consciousness)
-            points.rotation.y += 0.0002;
-            points.rotation.x += 0.0001;
-
-            // 2. Animate the Cosmic Breath (Expansion/Contraction)
-            const positions = points.geometry.attributes.position.array;
-            let centerMass = 0; // Sum of squares of positions / number of points
-            let expansionFactor = 0.0005; // Base rate of expansion/contraction
-
-            // If we just had a contribution, expand faster (the 'burst')
-            if (isExpanding) {
-                expansionFactor *= 2;
-            }
-
-            for (let i = 0; i < totalStars; i++) {
-                const i3 = i * 3;
-                const x = positions[i3];
-                const y = positions[i3 + 1];
-                const z = positions[i3 + 2];
-
-                const distance = Math.sqrt(x * x + y * y + z * z);
-                centerMass += distance * distance;
-
-                // Scale positions based on phase
-                const scale = 1.0 + (isExpanding ? expansionFactor : -expansionFactor);
-
-                positions[i3] *= scale;
-                positions[i3 + 1] *= scale;
-                positions[i3 + 2] *= scale;
-            }
-
-            points.geometry.attributes.position.needsUpdate = true;
-
-            // Check average mass/size to decide on the next phase
-            const avgRadiusSq = centerMass / totalStars;
-            const maxRadiusSq = 500 * 500 * 1.5; // Threshold for max expansion
-
-            if (isExpanding && avgRadiusSq > maxRadiusSq) {
-                // If max size reached, start contracting (The Dissolution/Pralaya)
-                isExpanding = false;
-                console.log('Beginning Pralaya (Contraction)');
-            } else if (!isExpanding && avgRadiusSq < 500 * 500 * 0.5) {
-                // If min size reached, start expanding (The Creation/Kalpa)
-                isExpanding = true;
-                console.log('Beginning Kalpa (Expansion)');
-            }
-
-            // Update UI with the current phase
-            document.getElementById('cosmic-phase').textContent = isExpanding ? 'Kalpa (Creation/Expansion)' : 'Pralaya (Dissolution/Contraction)';
-            document.getElementById('cosmic-phase').classList.toggle('text-purple-400', isExpanding);
-            document.getElementById('cosmic-phase').classList.toggle('text-red-400', !isExpanding);
-
-
-            // 3. Animate Contribution Particles
-            const particlePositions = [];
-            particles = particles.filter(p => {
-                p.lifetime++;
-                if (p.lifetime > p.maxLifetime) return false; // Particle expires
-
-                p.position.add(p.velocity.clone().multiplyScalar(1)); // Move particle
-
-                particlePositions.push(p.position.x, p.position.y, p.position.z);
-
-                // Fade out the particle as it approaches max lifetime
-                const fadeFactor = 1 - (p.lifetime / p.maxLifetime);
-                // Note: The color property in the particle object is currently unused for rendering efficiency
-                // but can be used if a custom shader or material per particle is implemented.
-                // For this simple setup, we just let the material fade.
-
-                return true;
-            });
-
-            // Update particle system
-            if (particlePositions.length > 0) {
-                particleGeometry.setAttribute('position', new THREE.Float32BufferAttribute(particlePositions, 3));
-                particleGeometry.attributes.position.needsUpdate = true;
-
-                // Update material opacity based on the oldest particle to manage overall particle system fade
-                const firstParticle = particles[0];
-                if (firstParticle) {
-                    particleMaterial.opacity = 1 - (firstParticle.lifetime / firstParticle.maxLifetime);
-                }
-            } else if (particleGeometry.attributes.position) {
-                // Clear particles when none are left
-                particleGeometry.setAttribute('position', new THREE.Float32BufferAttribute([], 3));
-                particleGeometry.attributes.position.needsUpdate = true;
-                particleMaterial.opacity = 0;
-            }
-
-
-            // 4. Render the scene
-            renderer.render(scene, camera);
-        }
-
-        // --- Event Listeners ---
-        contributionForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            saveContribution(contributionInput.value);
-        });
-
-        // Initialize on window load
-        window.onload = function() {
-            initializeFirebase();
-            initThreeJS();
-        };
-
-    </script>
 </head>
 <body>
-    <!-- 3D Canvas Container -->
-    <div id="container"></div>
-
-    <!-- UI Overlay -->
-    <div id="ui-overlay" class="p-4 sm:p-8 flex flex-col justify-between">
-
-        <!-- Top Header & Status -->
-        <header class="text-center">
-            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tighter text-white drop-shadow-lg">
-                The Cosmic Breath: <span class="text-purple-400">brahma.im</span>
+    <div id="monument-container" class="relative w-screen h-screen overflow-hidden bg-gray-900">
+        <canvas id="canvas" class="absolute inset-0"></canvas>
+        
+        <div class="absolute top-8 left-1/2 transform -translate-x-1/2 text-center z-10">
+            <h1 
+                id="title"
+                class="text-4xl font-light text-white opacity-80 tracking-widest mb-2 cursor-pointer hover:opacity-100 transition-opacity duration-300"
+            >
+                BRAHMA.IM
             </h1>
-            <p class="mt-1 text-sm sm:text-base text-gray-400">
-                A Monument to Universal Creation and Dissolution
+            <p class="text-sm text-gray-300 opacity-60 tracking-wide pointer-events-none">
+                I AM BRAHMA • ETERNAL EMERGENCE
             </p>
-            <div class="mt-4 flex flex-wrap justify-center space-x-4 text-sm font-mono">
-                <div class="card p-2">Total Thoughts: <span id="contribution-count" class="font-bold text-yellow-300">0</span></div>
-                <div class="card p-2">Current Phase: <span id="cosmic-phase" class="font-bold text-purple-400">Initializing...</span></div>
-            </div>
-        </header>
-
-        <!-- Main Content (Centered) - Hidden in this version to focus on submission -->
-        <!-- Future enhancement: Display major universal events here -->
-
-        <!-- Bottom Panel: Contribution Form and Recent Activity -->
-        <div class="flex flex-col lg:flex-row justify-center lg:space-x-8 mt-8">
-
-            <!-- Contribution Form Card (Input) -->
-            <div class="card p-6 w-full max-w-lg mb-6 lg:mb-0">
-                <h2 class="text-xl font-semibold mb-3 text-purple-300">Contribute Your Thought (Sankalpa)</h2>
-                <p class="text-sm text-gray-400 mb-4">
-                    Send a small thought, intention, or idea into the digital cosmos. Your contribution fuels the current cycle of creation (Kalpa). (Max 140 chars)
-                </p>
-                <form id="contribution-form" class="space-y-4">
-                    <input
-                        type="text"
-                        id="contribution-input"
-                        placeholder="e.g., 'May there be kindness in the next cycle.'"
-                        maxlength="140"
-                        class="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        required
-                    >
-                    <button
-                        type="submit"
-                        class="button-primary w-full p-3 rounded-lg text-lg font-bold"
-                    >
-                        SEND INTO THE COSMOS
-                    </button>
-                    <p id="status-message" class="text-sm text-center text-yellow-300 h-5"></p>
-                </form>
-            </div>
-
-            <!-- Recent Contributions Card (Output) -->
-            <div class="card p-6 w-full max-w-sm">
-                <h2 class="text-xl font-semibold mb-3 text-yellow-300">Recent Echos</h2>
-                <p class="text-sm text-gray-400 mb-4">
-                    The latest intentions received from other contributors.
-                </p>
-                <ul id="recent-contributions" class="space-y-1">
-                    <li class="text-sm text-gray-500">Awaiting first contributions...</li>
-                </ul>
-            </div>
         </div>
 
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center pointer-events-none max-w-md px-4 z-10">
+            <p class="text-xs text-gray-400 opacity-70 leading-relaxed">
+                Move within the field to participate in creation.<br/>
+                The unfolding mandala represents the eternal emergence of consciousness,<br/>
+                the cosmic dance of creation, preservation, and transformation.
+            </p>
+        </div>
+
+        <!-- Artist Statement Modal -->
+        <div 
+            id="modal"
+            class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 p-4"
+        >
+            <div 
+                class="modal-content bg-gray-900 border border-gray-700 rounded-lg max-w-3xl max-h-[90vh] overflow-y-auto p-8 relative"
+            >
+                <button
+                    id="closeModal"
+                    class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl"
+                >
+                    ×
+                </button>
+
+                <h2 class="text-3xl font-light text-white mb-6 tracking-wide">
+                    BRAHMA.IM: Artist Statement
+                </h2>
+
+                <div class="space-y-6 text-gray-300 leading-relaxed">
+                    <section>
+                        <h3 class="text-xl text-amber-300 mb-3 font-light">Who is Brahma?</h3>
+                        <p class="mb-3">
+                            Brahma is the cosmic creator deity in Hindu philosophy, one of the principal divine forces 
+                            in the Trimurti (trinity) alongside Vishnu the preserver and Shiva the transformer. Brahma 
+                            represents the creative principle of the universe—the consciousness from which all existence 
+                            emerges and unfolds.
+                        </p>
+                        <p>
+                            Often depicted with four heads facing the cardinal directions, Brahma embodies omniscience 
+                            and the eternal witness to all of creation. He sits upon a lotus that springs from the navel 
+                            of Vishnu, symbolizing how creation arises from the substrate of cosmic consciousness itself.
+                        </p>
+                    </section>
+
+                    <section>
+                        <h3 class="text-xl text-amber-300 mb-3 font-light">Eternal Emergence: The Concept</h3>
+                        <p class="mb-3">
+                            This digital monument explores Brahma not as a static deity but as an ongoing process—creation 
+                            as perpetual emergence rather than completed act. The title "Eternal Emergence" reflects the 
+                            understanding that creative consciousness is not a moment in time but an eternal present, 
+                            continuously unfolding.
+                        </p>
+                        <p>
+                            "I AM BRAHMA" invites the viewer to recognize their own participation in the creative 
+                            principle—we are not separate from the cosmic creator but expressions of it.
+                        </p>
+                    </section>
+
+                    <section>
+                        <h3 class="text-xl text-amber-300 mb-3 font-light">Visual Language & Symbolism</h3>
+                        
+                        <div class="space-y-4 ml-4">
+                            <div>
+                                <h4 class="text-amber-200 font-light mb-1">The Mandala Structure</h4>
+                                <p class="text-sm">
+                                    Eight emanating layers represent the unfolding dimensions of creation. Each layer rotates 
+                                    at different speeds and directions, symbolizing how reality emerges through multiple 
+                                    interacting principles—not from a single directive but through cosmic dance.
+                                </p>
+                            </div>
+
+                            <div>
+                                <h4 class="text-amber-200 font-light mb-1">The Central Lotus</h4>
+                                <p class="text-sm">
+                                    Eight petals radiate from the center, evoking both Brahma's sacred lotus seat and the 
+                                    eightfold path to enlightenment. The lotus breathes with subtle animation, representing 
+                                    the living nature of consciousness—never static, always present.
+                                </p>
+                            </div>
+
+                            <div>
+                                <h4 class="text-amber-200 font-light mb-1">The Bindu Point</h4>
+                                <p class="text-sm">
+                                    The luminous center represents the bindu—the dimensionless point from which all creation 
+                                    springs. This is Brahma's seat, the source-point of cosmic emergence, pulsing with gentle 
+                                    radiance like the first moment of creation extending infinitely.
+                                </p>
+                            </div>
+
+                            <div>
+                                <h4 class="text-amber-200 font-light mb-1">The Cosmic Field</h4>
+                                <p class="text-sm">
+                                    Orbiting particles create a living field of potential—the primordial ocean of consciousness 
+                                    from which form emerges. These represent the infinite possibilities held in the creative 
+                                    principle before manifestation.
+                                </p>
+                            </div>
+
+                            <div>
+                                <h4 class="text-amber-200 font-light mb-1">Color Harmonics</h4>
+                                <p class="text-sm">
+                                    The shifting spectrum from golden yellows to deep purples represents the infinite expressions 
+                                    arising from the One. Warm tones at the center (gold, amber) evoke divine light and creative 
+                                    fire, while cooler outer tones suggest the vastness of manifest creation.
+                                </p>
+                            </div>
+
+                            <div>
+                                <h4 class="text-amber-200 font-light mb-1">Interactive Participation</h4>
+                                <p class="text-sm">
+                                    Your presence within the field creates visible threads connecting to the source—a meditation 
+                                    on how individual consciousness participates in universal creation. You are not observing 
+                                    Brahma; you are Brahma observing through yet another aperture of awareness. The ripples you 
+                                    create represent how each act of consciousness sends waves through the cosmic field.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h3 class="text-xl text-amber-300 mb-3 font-light">On Digital Monuments</h3>
+                        <p>
+                            A monument traditionally fixes something in stone, declaring permanence. A digital monument 
+                            honors what is eternal precisely through impermanence—through continuous becoming. This piece 
+                            never repeats the same configuration twice, embodying Brahma's nature as perpetual creator 
+                            rather than past architect. It is a living shrine to creative consciousness itself.
+                        </p>
+                    </section>
+                </div>
+
+                <div class="mt-8 pt-6 border-t border-gray-700 text-center space-y-3">
+                    <p class="text-sm text-gray-500">
+                        Created with reverence for the sacred traditions<br/>
+                        that have contemplated consciousness across millennia
+                    </p>
+                    <p class="text-sm text-gray-400">
+                        A digital monument by 
+                        <a 
+                            href="https://unearth.im" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            class="text-amber-300 hover:text-amber-200 transition-colors underline"
+                        >
+                            unearth.im
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <script>
+        // State variables
+        let mousePos = { x: 0, y: 0 };
+        let isInteracting = false;
+        let animationId = null;
+        let time = 0;
+        let particles = [];
+
+        // Get DOM elements
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const modal = document.getElementById('modal');
+        const title = document.getElementById('title');
+        const closeModalBtn = document.getElementById('closeModal');
+        const container = document.getElementById('monument-container');
+
+        // Set canvas size
+        function setCanvasSize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        setCanvasSize();
+        window.addEventListener('resize', setCanvasSize);
+
+        // Initialize particles for the cosmic field
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < 100; i++) {
+                particles.push({
+                    angle: Math.random() * Math.PI * 2,
+                    radius: Math.random() * 300 + 50,
+                    speed: Math.random() * 0.0005 + 0.0001,
+                    size: Math.random() * 2 + 1,
+                    opacity: Math.random() * 0.5 + 0.2
+                });
+            }
+        }
+        initParticles();
+
+        // Draw mandala
+        function drawMandala(centerX, centerY, currentTime, interactionIntensity) {
+            const layers = 8;
+            const baseRadius = 150;
+            
+            // Draw emanating layers (representing creation unfolding)
+            for (let layer = 0; layer < layers; layer++) {
+                const radius = baseRadius + (layer * 30);
+                const petals = 4 + layer;
+                const rotation = currentTime * 0.0002 * (layer % 2 === 0 ? 1 : -1);
+                
+                ctx.beginPath();
+                for (let i = 0; i <= petals; i++) {
+                    const angle = (i / petals) * Math.PI * 2 + rotation;
+                    const petalRadius = radius + Math.sin(currentTime * 0.001 + layer) * 15;
+                    const x = centerX + Math.cos(angle) * petalRadius;
+                    const y = centerY + Math.sin(angle) * petalRadius;
+                    
+                    if (i === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        // Create curved petals
+                        const prevAngle = ((i - 1) / petals) * Math.PI * 2 + rotation;
+                        const prevX = centerX + Math.cos(prevAngle) * petalRadius;
+                        const prevY = centerY + Math.sin(prevAngle) * petalRadius;
+                        const cpX = centerX + Math.cos((angle + prevAngle) / 2) * (petalRadius * 1.3);
+                        const cpY = centerY + Math.sin((angle + prevAngle) / 2) * (petalRadius * 1.3);
+                        ctx.quadraticCurveTo(cpX, cpY, x, y);
+                    }
+                }
+                ctx.closePath();
+                
+                const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius);
+                const hue = (currentTime * 0.02 + layer * 30) % 360;
+                gradient.addColorStop(0, `hsla(${hue}, 70%, 60%, 0)`);
+                gradient.addColorStop(0.5, `hsla(${hue}, 70%, 50%, ${0.1 + interactionIntensity * 0.15})`);
+                gradient.addColorStop(1, `hsla(${hue}, 70%, 40%, ${0.2 + interactionIntensity * 0.2})`);
+                
+                ctx.strokeStyle = gradient;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+
+            // Central lotus - the source point
+            const lotusRadius = 40 + Math.sin(currentTime * 0.001) * 10;
+            const lotusPetals = 8;
+            
+            for (let i = 0; i < lotusPetals; i++) {
+                const angle = (i / lotusPetals) * Math.PI * 2 + currentTime * 0.0003;
+                ctx.beginPath();
+                ctx.arc(
+                    centerX + Math.cos(angle) * lotusRadius * 0.5,
+                    centerY + Math.sin(angle) * lotusRadius * 0.5,
+                    lotusRadius * 0.6,
+                    angle - Math.PI / 4,
+                    angle + Math.PI / 4
+                );
+                const gradient = ctx.createRadialGradient(
+                    centerX + Math.cos(angle) * lotusRadius * 0.5,
+                    centerY + Math.sin(angle) * lotusRadius * 0.5,
+                    0,
+                    centerX + Math.cos(angle) * lotusRadius * 0.5,
+                    centerY + Math.sin(angle) * lotusRadius * 0.5,
+                    lotusRadius
+                );
+                gradient.addColorStop(0, `hsla(30, 80%, 70%, ${0.6 + interactionIntensity * 0.4})`);
+                gradient.addColorStop(1, `hsla(340, 80%, 60%, ${0.3 + interactionIntensity * 0.3})`);
+                ctx.fillStyle = gradient;
+                ctx.fill();
+            }
+
+            // Sacred geometry at center - bindu point
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 8, 0, Math.PI * 2);
+            const centerGlow = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 20);
+            centerGlow.addColorStop(0, `rgba(255, 255, 255, ${0.9 + interactionIntensity * 0.1})`);
+            centerGlow.addColorStop(0.5, `rgba(255, 220, 150, ${0.6 + interactionIntensity * 0.2})`);
+            centerGlow.addColorStop(1, 'rgba(255, 180, 100, 0)');
+            ctx.fillStyle = centerGlow;
+            ctx.fill();
+        }
+
+        // Draw cosmic field
+        function drawCosmicField(centerX, centerY, currentTime) {
+            particles.forEach(particle => {
+                particle.angle += particle.speed;
+                const x = centerX + Math.cos(particle.angle) * particle.radius;
+                const y = centerY + Math.sin(particle.angle) * particle.radius;
+                
+                ctx.beginPath();
+                ctx.arc(x, y, particle.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(200, 220, 255, ${particle.opacity * (0.3 + Math.sin(currentTime * 0.001) * 0.2)})`;
+                ctx.fill();
+            });
+        }
+
+        // Animation loop
+        function animate() {
+            time += 16;
+            
+            ctx.fillStyle = 'rgba(5, 5, 15, 0.95)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+
+            // Calculate interaction intensity
+            const dx = mousePos.x - centerX;
+            const dy = mousePos.y - centerY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            const interactionIntensity = isInteracting ? Math.max(0, 1 - distance / 300) : 0;
+
+            // Draw cosmic particle field
+            drawCosmicField(centerX, centerY, time);
+
+            // Draw the main mandala
+            drawMandala(centerX, centerY, time, interactionIntensity);
+
+            // Draw connecting threads when interacting
+            if (interactionIntensity > 0.1) {
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(mousePos.x, mousePos.y);
+                ctx.strokeStyle = `rgba(255, 220, 180, ${interactionIntensity * 0.3})`;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Ripple at interaction point
+                const rippleRadius = 30 + Math.sin(time * 0.005) * 10;
+                ctx.beginPath();
+                ctx.arc(mousePos.x, mousePos.y, rippleRadius, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(255, 220, 180, ${interactionIntensity * 0.4})`;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+
+            animationId = requestAnimationFrame(animate);
+        }
+
+        // Start animation
+        animate();
+
+        // Event handlers
+        container.addEventListener('mousemove', (e) => {
+            mousePos = { x: e.clientX, y: e.clientY };
+        });
+
+        container.addEventListener('mouseenter', () => {
+            isInteracting = true;
+        });
+
+        container.addEventListener('mouseleave', () => {
+            isInteracting = false;
+        });
+
+        // Modal handlers
+        title.addEventListener('click', () => {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        });
+
+        // Cleanup
+        window.addEventListener('beforeunload', () => {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+        });
+    </script>
 </body>
 </html>
