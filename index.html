@@ -1,6 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      // --- THE ARTWORK (Variable Content) ---
+      "@type": "VisualArtwork", 
+      "@id": "https://brahma.im/#artwork",
+      "url": "https://brahma.im",
+      "name": "BRAHMA.IM • Eternal Emergence",
+      "headline": "Eternal Emergence",
+      "description": "An interactive digital monument exploring Brahma as eternal creative emergence. Experience the cosmic dance of creation through sacred geometry and generative art.",
+      "image": "https://brahma.im/og-image.png",
+      "artMedium": "Generative JavaScript (Canvas/WebGL)",
+      "artForm": "Digital Monument",
+      "genre": "Interactive Art",
+      "copyrightYear": "2025",
+      "inLanguage": "en-US",
+
+      // --- THE CHAIN OF CUSTODY (Immutable Infrastructure) ---
+      "author": [
+        { "@id": "https://josiest.com/#person" },
+        { "@id": "https://felixvelas.co/#person" }
+      ],
+      "creator": [
+        { "@id": "https://josiest.com/#person" },
+        { "@id": "https://felixvelas.co/#person" }
+      ],
+      "publisher": { "@id": "https://unearth.im/#organization" },
+      "isPartOf": { "@id": "https://unearth.im/#collection" },
+      "mainEntityOfPage": { "@id": "https://brahma.im/#website" }
+    },
+
+    {
+      // --- THE WEBSITE CONTAINER ---
+      "@type": "WebSite",
+      "@id": "https://brahma.im/#website",
+      "url": "https://brahma.im",
+      "name": "BRAHMA.IM • Eternal Emergence",
+      "publisher": { "@id": "https://unearth.im/#organization" }
+    },
+
+    // --- THE SOVEREIGN ENTITIES (Immutable Core) ---
+    {
+      "@type": "Organization",
+      "@id": "https://unearth.im/#organization",
+      "name": "unearth.im",
+      "url": "https://unearth.im",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://unearth.im/favicon-32x32.png"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://josiest.com/#person",
+      "name": "Josie Jefferson",
+      "url": "https://josiest.com",
+      "jobTitle": "Digital Archaeologist",
+      "sameAs": [
+        "https://notjojo.im",
+        "https://notjojo.org"
+      ], 
+      "affiliation": { "@id": "https://unearth.im/#organization" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://felixvelas.co/#person",
+      "name": "Felix Velasco",
+      "url": "https://felixvelas.co",
+      "jobTitle": "Trust Architect",
+      "affiliation": { "@id": "https://unearth.im/#organization" }
+    }
+  ]
+}
+</script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
