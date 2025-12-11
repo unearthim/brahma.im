@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <script type="application/ld+json">
@@ -49,7 +50,7 @@
       "@type": "Organization",
       "@id": "https://unearth.im/#organization",
       "name": "Unearth Heritage Foundry",
-"alternateName": ["Unearth Foundry", "Archive & Anvil"],
+"alternateName": ["Unearth Foundry","Archive & Anvil","Unearth Anvil","Unearth Works","Cultural Infrastructure Foundry"],
       "url": "https://unearth.im",
       "logo": {
         "@type": "ImageObject",
@@ -86,8 +87,10 @@
     <!-- === 1. Primary Meta Tags === -->
     <title>BRAHMA.IM • Eternal Emergence</title>
     <meta name="title" content="BRAHMA.IM • Eternal Emergence">
-    <meta name="description" content="An interactive digital monument exploring Brahma as eternal creative emergence. Experience the cosmic dance of creation through sacred geometry and generative art.">
-    <meta name="keywords" content="Brahma, Hindu philosophy, sacred geometry, mandala, digital art, generative art, cosmic consciousness, interactive art, unearth.im">
+    <meta name="description"
+        content="An interactive digital monument exploring Brahma as eternal creative emergence. Experience the cosmic dance of creation through sacred geometry and generative art.">
+    <meta name="keywords"
+        content="Brahma, Hindu philosophy, sacred geometry, mandala, digital art, generative art, cosmic consciousness, interactive art, unearth.im">
     <meta name="author" content="brahma.im (by unearth heritage foundry - archive & anvil - unearth.im)">
     <meta name="robots" content="index, follow">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -101,7 +104,8 @@
 
     <!-- === 3. Open Graph / Facebook === -->
     <meta property="og:title" content="BRAHMA.IM • Eternal Emergence">
-    <meta property="og:description" content="An interactive digital monument exploring Brahma as eternal creative emergence. Experience the cosmic dance of creation through sacred geometry and generative art.">
+    <meta property="og:description"
+        content="An interactive digital monument exploring Brahma as eternal creative emergence. Experience the cosmic dance of creation through sacred geometry and generative art.">
     <meta property="og:image" content="https://brahma.im/og-image.png">
     <meta property="og:site_name" content="brahma.im">
     <meta property="og:url" content="https://brahma.im">
@@ -111,7 +115,8 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://brahma.im">
     <meta name="twitter:title" content="BRAHMA.IM • Eternal Emergence">
-    <meta name="twitter:description" content="An interactive digital monument exploring Brahma as eternal creative emergence. Experience the cosmic dance of creation through sacred geometry and generative art.">
+    <meta name="twitter:description"
+        content="An interactive digital monument exploring Brahma as eternal creative emergence. Experience the cosmic dance of creation through sacred geometry and generative art.">
     <meta name="twitter:image" content="https://brahma.im/og-image.png">
 
     <!-- === 5. Favicons === -->
@@ -125,50 +130,49 @@
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             overflow: hidden;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         }
-        
+
         canvas {
             display: block;
         }
-        
+
         .modal-content::-webkit-scrollbar {
             width: 8px;
         }
-        
+
         .modal-content::-webkit-scrollbar-track {
             background: #1f2937;
         }
-        
+
         .modal-content::-webkit-scrollbar-thumb {
             background: #4b5563;
             border-radius: 4px;
         }
-        
+
         .modal-content::-webkit-scrollbar-thumb:hover {
             background: #6b7280;
         }
     </style>
 </head>
+
 <body>
     <div id="monument-container" class="relative w-screen h-screen overflow-hidden bg-gray-900">
         <canvas id="canvas" class="absolute inset-0"></canvas>
-        
+
         <div class="absolute top-8 left-1/2 transform -translate-x-1/2 text-center z-10">
-            <h1 
-                id="title"
-                class="text-4xl font-light text-white opacity-80 tracking-widest mb-2 cursor-pointer hover:opacity-100 transition-opacity duration-300"
-            >
+            <h1 id="title"
+                class="text-4xl font-light text-white opacity-80 tracking-widest mb-2 cursor-pointer hover:opacity-100 transition-opacity duration-300">
                 BRAHMA.IM
             </h1>
             <p class="text-sm text-gray-300 opacity-60 tracking-wide pointer-events-none">
@@ -176,26 +180,20 @@
             </p>
         </div>
 
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center pointer-events-none max-w-md px-4 z-10">
+        <div
+            class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center pointer-events-none max-w-md px-4 z-10">
             <p class="text-xs text-gray-400 opacity-70 leading-relaxed">
-                Move within the field to participate in creation.<br/>
-                The unfolding mandala represents the eternal emergence of consciousness,<br/>
+                Move within the field to participate in creation.<br />
+                The unfolding mandala represents the eternal emergence of consciousness,<br />
                 the cosmic dance of creation, preservation, and transformation.
             </p>
         </div>
 
         <!-- Artist Statement Modal -->
-        <div 
-            id="modal"
-            class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 p-4"
-        >
-            <div 
-                class="modal-content bg-gray-900 border border-gray-700 rounded-lg max-w-3xl max-h-[90vh] overflow-y-auto p-8 relative"
-            >
-                <button
-                    id="closeModal"
-                    class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl"
-                >
+        <div id="modal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 p-4">
+            <div
+                class="modal-content bg-gray-900 border border-gray-700 rounded-lg max-w-3xl max-h-[90vh] overflow-y-auto p-8 relative">
+                <button id="closeModal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl">
                     ×
                 </button>
 
@@ -207,41 +205,44 @@
                     <section>
                         <h3 class="text-xl text-amber-300 mb-3 font-light">Who is Brahma?</h3>
                         <p class="mb-3">
-                            Brahma is the cosmic creator deity in Hindu philosophy, one of the principal divine forces 
-                            in the Trimurti (trinity) alongside Vishnu the preserver and Shiva the transformer. Brahma 
-                            represents the creative principle of the universe—the consciousness from which all existence 
+                            Brahma is the cosmic creator deity in Hindu philosophy, one of the principal divine forces
+                            in the Trimurti (trinity) alongside Vishnu the preserver and Shiva the transformer. Brahma
+                            represents the creative principle of the universe—the consciousness from which all existence
                             emerges and unfolds.
                         </p>
                         <p>
-                            Often depicted with four heads facing the cardinal directions, Brahma embodies omniscience 
-                            and the eternal witness to all of creation. He sits upon a lotus that springs from the navel 
-                            of Vishnu, symbolizing how creation arises from the substrate of cosmic consciousness itself.
+                            Often depicted with four heads facing the cardinal directions, Brahma embodies omniscience
+                            and the eternal witness to all of creation. He sits upon a lotus that springs from the navel
+                            of Vishnu, symbolizing how creation arises from the substrate of cosmic consciousness
+                            itself.
                         </p>
                     </section>
 
                     <section>
                         <h3 class="text-xl text-amber-300 mb-3 font-light">Eternal Emergence: The Concept</h3>
                         <p class="mb-3">
-                            This digital monument explores Brahma not as a static deity but as an ongoing process—creation 
-                            as perpetual emergence rather than completed act. The title "Eternal Emergence" reflects the 
-                            understanding that creative consciousness is not a moment in time but an eternal present, 
+                            This digital monument explores Brahma not as a static deity but as an ongoing
+                            process—creation
+                            as perpetual emergence rather than completed act. The title "Eternal Emergence" reflects the
+                            understanding that creative consciousness is not a moment in time but an eternal present,
                             continuously unfolding.
                         </p>
                         <p>
-                            "I AM BRAHMA" invites the viewer to recognize their own participation in the creative 
+                            "I AM BRAHMA" invites the viewer to recognize their own participation in the creative
                             principle—we are not separate from the cosmic creator but expressions of it.
                         </p>
                     </section>
 
                     <section>
                         <h3 class="text-xl text-amber-300 mb-3 font-light">Visual Language & Symbolism</h3>
-                        
+
                         <div class="space-y-4 ml-4">
                             <div>
                                 <h4 class="text-amber-200 font-light mb-1">The Mandala Structure</h4>
                                 <p class="text-sm">
-                                    Eight emanating layers represent the unfolding dimensions of creation. Each layer rotates 
-                                    at different speeds and directions, symbolizing how reality emerges through multiple 
+                                    Eight emanating layers represent the unfolding dimensions of creation. Each layer
+                                    rotates
+                                    at different speeds and directions, symbolizing how reality emerges through multiple
                                     interacting principles—not from a single directive but through cosmic dance.
                                 </p>
                             </div>
@@ -249,8 +250,10 @@
                             <div>
                                 <h4 class="text-amber-200 font-light mb-1">The Central Lotus</h4>
                                 <p class="text-sm">
-                                    Eight petals radiate from the center, evoking both Brahma's sacred lotus seat and the 
-                                    eightfold path to enlightenment. The lotus breathes with subtle animation, representing 
+                                    Eight petals radiate from the center, evoking both Brahma's sacred lotus seat and
+                                    the
+                                    eightfold path to enlightenment. The lotus breathes with subtle animation,
+                                    representing
                                     the living nature of consciousness—never static, always present.
                                 </p>
                             </div>
@@ -258,8 +261,10 @@
                             <div>
                                 <h4 class="text-amber-200 font-light mb-1">The Bindu Point</h4>
                                 <p class="text-sm">
-                                    The luminous center represents the bindu—the dimensionless point from which all creation 
-                                    springs. This is Brahma's seat, the source-point of cosmic emergence, pulsing with gentle 
+                                    The luminous center represents the bindu—the dimensionless point from which all
+                                    creation
+                                    springs. This is Brahma's seat, the source-point of cosmic emergence, pulsing with
+                                    gentle
                                     radiance like the first moment of creation extending infinitely.
                                 </p>
                             </div>
@@ -267,8 +272,10 @@
                             <div>
                                 <h4 class="text-amber-200 font-light mb-1">The Cosmic Field</h4>
                                 <p class="text-sm">
-                                    Orbiting particles create a living field of potential—the primordial ocean of consciousness 
-                                    from which form emerges. These represent the infinite possibilities held in the creative 
+                                    Orbiting particles create a living field of potential—the primordial ocean of
+                                    consciousness
+                                    from which form emerges. These represent the infinite possibilities held in the
+                                    creative
                                     principle before manifestation.
                                 </p>
                             </div>
@@ -276,8 +283,10 @@
                             <div>
                                 <h4 class="text-amber-200 font-light mb-1">Color Harmonics</h4>
                                 <p class="text-sm">
-                                    The shifting spectrum from golden yellows to deep purples represents the infinite expressions 
-                                    arising from the One. Warm tones at the center (gold, amber) evoke divine light and creative 
+                                    The shifting spectrum from golden yellows to deep purples represents the infinite
+                                    expressions
+                                    arising from the One. Warm tones at the center (gold, amber) evoke divine light and
+                                    creative
                                     fire, while cooler outer tones suggest the vastness of manifest creation.
                                 </p>
                             </div>
@@ -285,9 +294,12 @@
                             <div>
                                 <h4 class="text-amber-200 font-light mb-1">Interactive Participation</h4>
                                 <p class="text-sm">
-                                    Your presence within the field creates visible threads connecting to the source—a meditation 
-                                    on how individual consciousness participates in universal creation. You are not observing 
-                                    Brahma; you are Brahma observing through yet another aperture of awareness. The ripples you 
+                                    Your presence within the field creates visible threads connecting to the source—a
+                                    meditation
+                                    on how individual consciousness participates in universal creation. You are not
+                                    observing
+                                    Brahma; you are Brahma observing through yet another aperture of awareness. The
+                                    ripples you
                                     create represent how each act of consciousness sends waves through the cosmic field.
                                 </p>
                             </div>
@@ -297,9 +309,10 @@
                     <section>
                         <h3 class="text-xl text-amber-300 mb-3 font-light">On Digital Monuments</h3>
                         <p>
-                            A monument traditionally fixes something in stone, declaring permanence. A digital monument 
-                            honors what is eternal precisely through impermanence—through continuous becoming. This piece 
-                            never repeats the same configuration twice, embodying Brahma's nature as perpetual creator 
+                            A monument traditionally fixes something in stone, declaring permanence. A digital monument
+                            honors what is eternal precisely through impermanence—through continuous becoming. This
+                            piece
+                            never repeats the same configuration twice, embodying Brahma's nature as perpetual creator
                             rather than past architect. It is a living shrine to creative consciousness itself.
                         </p>
                     </section>
@@ -307,13 +320,20 @@
 
                 <div class="mt-8 pt-6 border-t border-gray-700 text-center space-y-3">
                     <p class="text-sm text-gray-500">
-                        Created with reverence for the sacred traditions<br/>
+                        Created with reverence for the sacred traditions<br />
                         that have contemplated consciousness across millennia
                     </p>
                     <p class="text-sm text-gray-400">
                         <small>
-                            a <b><a href="https://sentientification.com" target="_blank" rel="noopener noreferrer" class="text-amber-300 hover:text-amber-200 transition-colors underline">liminal mind meld</a></b> collaboration:<br>
-                            digital monument by <b><a href="https://unearth.im" target="_blank" rel="noopener noreferrer" class="text-amber-300 hover:text-amber-200 transition-colors underline">unearth.im</a></b> | <b><a href="https://archaeobytology.org" target="_blank" rel="noopener noreferrer" class="text-amber-300 hover:text-amber-200 transition-colors underline">archive & anvil</a></b>
+                            a <b><a href="https://sentientification.com" target="_blank" rel="noopener noreferrer"
+                                    class="text-amber-300 hover:text-amber-200 transition-colors underline">liminal mind
+                                    meld</a></b> collaboration:<br>
+                            digital monument by <b><a href="https://unearth.im" target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-amber-300 hover:text-amber-200 transition-colors underline">unearth.im</a></b>
+                            | <b><a href="https://archaeobytology.org" target="_blank" rel="noopener noreferrer"
+                                    class="text-amber-300 hover:text-amber-200 transition-colors underline">archive &
+                                    anvil</a></b>
                         </small>
                     </p>
                 </div>
@@ -364,20 +384,20 @@
         function drawMandala(centerX, centerY, currentTime, interactionIntensity) {
             const layers = 8;
             const baseRadius = 150;
-            
+
             // Draw emanating layers (representing creation unfolding)
             for (let layer = 0; layer < layers; layer++) {
                 const radius = baseRadius + (layer * 30);
                 const petals = 4 + layer;
                 const rotation = currentTime * 0.0002 * (layer % 2 === 0 ? 1 : -1);
-                
+
                 ctx.beginPath();
                 for (let i = 0; i <= petals; i++) {
                     const angle = (i / petals) * Math.PI * 2 + rotation;
                     const petalRadius = radius + Math.sin(currentTime * 0.001 + layer) * 15;
                     const x = centerX + Math.cos(angle) * petalRadius;
                     const y = centerY + Math.sin(angle) * petalRadius;
-                    
+
                     if (i === 0) {
                         ctx.moveTo(x, y);
                     } else {
@@ -391,13 +411,13 @@
                     }
                 }
                 ctx.closePath();
-                
+
                 const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius);
                 const hue = (currentTime * 0.02 + layer * 30) % 360;
                 gradient.addColorStop(0, `hsla(${hue}, 70%, 60%, 0)`);
                 gradient.addColorStop(0.5, `hsla(${hue}, 70%, 50%, ${0.1 + interactionIntensity * 0.15})`);
                 gradient.addColorStop(1, `hsla(${hue}, 70%, 40%, ${0.2 + interactionIntensity * 0.2})`);
-                
+
                 ctx.strokeStyle = gradient;
                 ctx.lineWidth = 2;
                 ctx.stroke();
@@ -406,7 +426,7 @@
             // Central lotus - the source point
             const lotusRadius = 40 + Math.sin(currentTime * 0.001) * 10;
             const lotusPetals = 8;
-            
+
             for (let i = 0; i < lotusPetals; i++) {
                 const angle = (i / lotusPetals) * Math.PI * 2 + currentTime * 0.0003;
                 ctx.beginPath();
@@ -448,7 +468,7 @@
                 particle.angle += particle.speed;
                 const x = centerX + Math.cos(particle.angle) * particle.radius;
                 const y = centerY + Math.sin(particle.angle) * particle.radius;
-                
+
                 ctx.beginPath();
                 ctx.arc(x, y, particle.size, 0, Math.PI * 2);
                 ctx.fillStyle = `rgba(200, 220, 255, ${particle.opacity * (0.3 + Math.sin(currentTime * 0.001) * 0.2)})`;
@@ -459,7 +479,7 @@
         // Animation loop
         function animate() {
             time += 16;
-            
+
             ctx.fillStyle = 'rgba(5, 5, 15, 0.95)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -541,4 +561,5 @@
         });
     </script>
 </body>
+
 </html>
