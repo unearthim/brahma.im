@@ -3,12 +3,12 @@
 
 <head>
 
-    <script type="application/ld+json">
+  <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
-      // --- THE ARTWORK (Variable Content) ---
+
       "@type": "VisualArtwork", 
       "@id": "https://brahma.im/#artwork",
       "url": "https://brahma.im",
@@ -22,7 +22,6 @@
       "copyrightYear": "2025",
       "inLanguage": "en-US",
 
-      // --- THE CHAIN OF CUSTODY (Immutable Infrastructure) ---
       "author": [
         { "@id": "https://josiest.com/#person" },
         { "@id": "https://felixvelas.co/#person" }
@@ -37,7 +36,6 @@
     },
 
     {
-      // --- THE WEBSITE CONTAINER ---
       "@type": "WebSite",
       "@id": "https://brahma.im/#website",
       "url": "https://brahma.im",
@@ -45,521 +43,718 @@
       "publisher": { "@id": "https://unearth.im/#organization" }
     },
 
-    // --- THE SOVEREIGN ENTITIES (Immutable Core) ---
-    {
+       {
       "@type": "Organization",
       "@id": "https://unearth.im/#organization",
       "name": "Unearth Heritage Foundry",
-"alternateName": ["Unearth Foundry","Archive & Anvil","Unearth Anvil","Unearth Works","Cultural Infrastructure Foundry"],
+      "alternateName": [
+        "Unearth Foundry",
+        "Heritage Lab"
+      ],
       "url": "https://unearth.im",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://unearth.im/favicon-32x32.png"
-      }
+        "url": "https://unearth.im/fingerprint.png"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Seattle",
+        "addressRegion": "WA",
+        "addressCountry": "US"
+      },
+      "foundingDate": "2024",
+      "description": "A philosophical research collective and digital archaeology lab. We preserve web heritage, explore AI-human collaboration frameworks, and build cultural infrastructure through the Archive & Anvil methodology.",
+      "knowsAbout": [
+        { "@id": "https://archaeobytology.org/#concept" },
+        { "@id": "https://sentientification.com/#concept" },
+        { "@id": "https://myceloom.com/#protocol" },
+        {
+          "@type": "DefinedTerm",
+          "name": "Digital Archaeology"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "AI-Human Collaboration"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Archive & Anvil"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Semantic IP"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Heritage Preservation"
+        }
+      ],
+      "subOrganization": {
+        "@id": "https://unearth.works/#organization"
+      },
+      "sameAs": [
+        "https://www.google.com/search?kgmid=/g/11yt8wf8rr",
+        "https://unearth.wiki",
+        "https://unearth.land",
+        "https://unearth.fyi",
+        "https://unearth.site",
+        "https://unearth.spot",
+        "https://unearth.name",
+        "https://unearth.page",
+        "https://unearth.ink",
+        "https://unearth.click",
+        "https://linkedin.com/company/unearthim",
+        "https://twitter.com/unearthim",
+        "https://github.com/unearthim",
+        "https://zenodo.org/communities/unearthim"
+      ],
+      "founder": [
+        {
+          "@id": "https://josiest.com/#person"
+        },
+        {
+          "@id": "https://felixvelas.co/#person"
+        }
+      ],
+      "member": [
+        {
+          "@id": "https://josiest.com/#person"
+        },
+        {
+          "@id": "https://felixvelas.co/#person"
+        }
+      ]
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://unearth.works/#organization",
+      "name": "Unearth Anvil",
+      "alternateName": ["Unearth Works", "Anvil Consulting"],
+      "description": "The consulting arm of Unearth Heritage Foundry, offering digital archaeology services, heritage preservation consulting, semantic infrastructure development, and Archive & Anvil methodology implementation.",
+      "url": "https://unearth.works",
+      "parentOrganization": {
+        "@id": "https://unearth.im/#organization"
+      },
+      "sameAs": [
+        "https://unearth.works"
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://archaeobytology.org/#concept",
+      "name": "Archaeobytology",
+      "alternateName": ["Digital Archaeology of Data", "The Archaeology of Digital Artifacts"],
+      "description": "The systematic study and preservation of digital artifacts, data structures, and online cultural heritage. A discipline that applies archaeological methodologies to the excavation, documentation, and interpretation of digital remains.",
+      "url": "https://archaeobytology.org",
+      "inDefinedTermSet": {
+        "@type": "DefinedTermSet",
+        "name": "Digital Heritage Studies"
+      },
+      "sameAs": [
+        "https://www.google.com/search?kgmid=/g/11yt8qm_qh",
+        "https://archaeobytology.org",
+        "https://zenodo.org/communities/archaeobytology/"
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://sentientification.com/#concept",
+      "name": "Sentientification",
+      "alternateName": ["The Sentientification Framework"],
+      "description": "A philosophical and technical framework for understanding the emergence of sentience-like properties in complex systems, particularly in AI-human collaborative contexts.",
+      "url": "https://sentientification.com",
+      "inDefinedTermSet": {
+        "@type": "DefinedTermSet",
+        "name": "AI Philosophy & Consciousness Studies"
+      },
+      "sameAs": [
+        "https://www.google.com/search?kgmid=/g/11yt8wsd1s",
+        "https://sentientification.com",
+        "https://sentientification.org",
+        "https://zenodo.org/communities/sentientification/"
+      ]
     },
     {
       "@type": "Person",
       "@id": "https://josiest.com/#person",
       "name": "Josie Jefferson",
       "url": "https://josiest.com",
-      "jobTitle": "Digital Archaeologist & Trust Architect",
+      "jobTitle": "Co-Founder & Digital Archaeologist",
+      "memberOf": {
+        "@id": "https://unearth.im/#organization"
+      },
+      "identifier": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "ICQ-UIN",
+          "name": "Legacy Web1 Identifier",
+          "value": "1428955",
+          "description": "Seven-digit pioneer-era UIN from the 1997 Mirabilis ICQ network, serving as a foundational node in the author's digital provenance."
+        }
+      ],
       "sameAs": [
         "https://notjojo.im",
-        "https://notjojo.org"
-      ], 
-      "affiliation": { "@id": "https://unearth.im/#organization" }
+        "https://orcid.org/0009-0006-3330-8214",
+        "https://zenodo.org/search?q=metadata.creators.person_or_org.name%3A%22Jefferson%2C%20Josie%22&l=list&p=1&s=10&sort=bestmatch"
+      ]
     },
     {
       "@type": "Person",
       "@id": "https://felixvelas.co/#person",
       "name": "Felix Velasco",
+      "givenName": "Felix Jefferson",
+      "familyName": "Velasco",
+      "alternateName": [
+        "Jeff Velasco",
+        "Felix J Velasco",
+        "Felix Jefferson Velasco",
+        "Felix Jefferson T. Velasco"
+      ],
+      "description": "Co-Founder of Unearth Heritage Foundry and Digital Archaeologist specializing in the intersection of digital heritage preservation, as well as AI and human consciousness.",
       "url": "https://felixvelas.co",
-      "jobTitle": "Trust Architect & Digital Archaeologist",
-      "affiliation": { "@id": "https://unearth.im/#organization" }
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Vassar College",
+        "url": "https://www.vassar.edu/",
+        "sameAs": "https://en.wikipedia.org/wiki/Vassar_College"
+      },
+      "affiliation": {
+        "@type": "CollegeOrUniversity",
+        "name": "University of Washington",
+        "url": "https://www.washington.edu/",
+        "sameAs": "https://en.wikipedia.org/wiki/University_of_Washington",
+        "description": "Fiscal Specialist; Fiscal Supervisor; Operations Specialist; Operations Manager;Assistant Director (17-year tenure)"
+      },
+      "image": "https://felixvelas.co/portrait.jpg",
+      "knowsAbout": [
+        {
+          "@type": "DefinedTerm",
+          "name": "Sentientification",
+          "url": "https://sentientification.com/definition/",
+          "sameAs": "https://www.google.com/search?kgmid=/g/11yt8wsd1s"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Archaeobytology",
+          "url": "https://archaeobytology.org/definition/",
+          "sameAs": "https://www.google.com/search?kgmid=/g/11yt8qm_qh"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Myceloom",
+          "url": "https://myceloom.com/definition/"
+        }
+      ],
+      "jobTitle": "Co-Founder & Digital Archaeologist",
+      "memberOf": {
+        "@id": "https://unearth.im/#organization"
+      },
+      "identifier": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "ICQ-UIN",
+          "name": "Legacy Web1 Identifier",
+          "value": "641658",
+          "description": "Six-digit pioneer-era UIN from the 1997 Mirabilis ICQ network, serving as a foundational node in the author's digital provenance."
+        }
+      ],
+      "sameAs": [
+        "https://web.archive.org/web/19990128143729/http://members.aol.com/AJJVelasco/me.html",
+        "https://web.archive.org/web/19981205002319/http://members.aol.com/AJJVelasco/home.html",
+        "https://web.archive.org/web/20040610152114/chez.com/fejjie",
+        "https://web.archive.org/web/20000302095404/http://untitled.kcizone.com/",
+        "https://web.archive.org/web/20000915145128/http://freespeech.org/untitled/me.html",
+        "https://web.archive.org/web/20000819091935/http://freespeech.org/untitled/",
+        "https://www.linkedin.com/in/felix-velasco-b793015",
+        "https://facebook.com/felix.velasco",
+        "https://zenodo.org/search?q=metadata.creators.person_or_org.name%3A%22Velasco%2C%20Felix%22&l=list&p=1&s=10&sort=bestmatch",
+        "https://orcid.org/0009-0001-6047-0595",
+        "https://unearth.im/felix.html",
+        "https://unearth.name/felix.html"
+      ]
     }
   ]
 }
 </script>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- === 1. Primary Meta Tags === -->
-    <title>BRAHMA.IM • Eternal Emergence</title>
-    <meta name="title" content="BRAHMA.IM • Eternal Emergence">
-    <meta name="description"
-        content="An interactive digital monument exploring Brahma as eternal creative emergence. Experience the cosmic dance of creation through sacred geometry and generative art.">
-    <meta name="keywords"
-        content="Brahma, Hindu philosophy, sacred geometry, mandala, digital art, generative art, cosmic consciousness, interactive art, unearth.im">
-    <meta name="author" content="brahma.im (by unearth heritage foundry - archive & anvil - unearth.im)">
-    <meta name="robots" content="index, follow">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="language" content="English">
+  <!-- === 1. Primary Meta Tags === -->
+  <title>BRAHMA.IM • Eternal Emergence</title>
+  <meta name="title" content="BRAHMA.IM • Eternal Emergence">
+  <meta name="description"
+    content="An interactive digital monument exploring Brahma as eternal creative emergence. Experience the cosmic dance of creation through sacred geometry and generative art.">
+  <meta name="keywords"
+    content="Brahma, Hindu philosophy, sacred geometry, mandala, digital art, generative art, cosmic consciousness, interactive art, unearth.im">
+  <meta name="author" content="brahma.im (by unearth heritage foundry - archive & anvil - unearth.im)">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="language" content="English">
 
-    <!-- Canonical Link -->
-    <link rel="canonical" href="https://brahma.im" />
+  <!-- Canonical Link -->
+  <link rel="canonical" href="https://brahma.im" />
 
-    <!-- === 2. Webmention Endpoint === -->
-    <link rel="webmention" href="https://webmention.io/unearth.im/webmention" />
+  <!-- === 2. Webmention Endpoint === -->
+  <link rel="webmention" href="https://webmention.io/unearth.im/webmention" />
 
-    <!-- === 3. Open Graph / Facebook === -->
-    <meta property="og:title" content="BRAHMA.IM • Eternal Emergence">
-    <meta property="og:description"
-        content="An interactive digital monument exploring Brahma as eternal creative emergence. Experience the cosmic dance of creation through sacred geometry and generative art.">
-    <meta property="og:image" content="https://brahma.im/og-image.png">
-    <meta property="og:site_name" content="brahma.im">
-    <meta property="og:url" content="https://brahma.im">
-    <meta property="og:type" content="website">
+  <!-- === 3. Open Graph / Facebook === -->
+  <meta property="og:title" content="BRAHMA.IM • Eternal Emergence">
+  <meta property="og:description"
+    content="An interactive digital monument exploring Brahma as eternal creative emergence. Experience the cosmic dance of creation through sacred geometry and generative art.">
+  <meta property="og:image" content="https://brahma.im/og-image.png">
+  <meta property="og:site_name" content="brahma.im">
+  <meta property="og:url" content="https://brahma.im">
+  <meta property="og:type" content="website">
 
-    <!-- === 4. Twitter Card === -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://brahma.im">
-    <meta name="twitter:title" content="BRAHMA.IM • Eternal Emergence">
-    <meta name="twitter:description"
-        content="An interactive digital monument exploring Brahma as eternal creative emergence. Experience the cosmic dance of creation through sacred geometry and generative art.">
-    <meta name="twitter:image" content="https://brahma.im/og-image.png">
+  <!-- === 4. Twitter Card === -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://brahma.im">
+  <meta name="twitter:title" content="BRAHMA.IM • Eternal Emergence">
+  <meta name="twitter:description"
+    content="An interactive digital monument exploring Brahma as eternal creative emergence. Experience the cosmic dance of creation through sacred geometry and generative art.">
+  <meta name="twitter:image" content="https://brahma.im/og-image.png">
 
-    <!-- === 5. Favicons === -->
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <link rel="alternate icon" href="/favicon.ico">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- === 5. Favicons === -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-    <!-- Brand Color Meta Tags -->
-    <meta name="theme-color" content="#05050F">
-    <meta name="msapplication-TileColor" content="#05050F">
+  <!-- Brand Color Meta Tags -->
+  <meta name="theme-color" content="#05050F">
+  <meta name="msapplication-TileColor" content="#05050F">
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            overflow: hidden;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-        }
+    body {
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    }
 
-        canvas {
-            display: block;
-        }
+    canvas {
+      display: block;
+    }
 
-        .modal-content::-webkit-scrollbar {
-            width: 8px;
-        }
+    .modal-content::-webkit-scrollbar {
+      width: 8px;
+    }
 
-        .modal-content::-webkit-scrollbar-track {
-            background: #1f2937;
-        }
+    .modal-content::-webkit-scrollbar-track {
+      background: #1f2937;
+    }
 
-        .modal-content::-webkit-scrollbar-thumb {
-            background: #4b5563;
-            border-radius: 4px;
-        }
+    .modal-content::-webkit-scrollbar-thumb {
+      background: #4b5563;
+      border-radius: 4px;
+    }
 
-        .modal-content::-webkit-scrollbar-thumb:hover {
-            background: #6b7280;
-        }
-    </style>
+    .modal-content::-webkit-scrollbar-thumb:hover {
+      background: #6b7280;
+    }
+  </style>
 </head>
 
 <body>
-    <div id="monument-container" class="relative w-screen h-screen overflow-hidden bg-gray-900">
-        <canvas id="canvas" class="absolute inset-0"></canvas>
+  <div id="monument-container" class="relative w-screen h-screen overflow-hidden bg-gray-900">
+    <canvas id="canvas" class="absolute inset-0"></canvas>
 
-        <div class="absolute top-8 left-1/2 transform -translate-x-1/2 text-center z-10">
-            <h1 id="title"
-                class="text-4xl font-light text-white opacity-80 tracking-widest mb-2 cursor-pointer hover:opacity-100 transition-opacity duration-300">
-                BRAHMA.IM
-            </h1>
-            <p class="text-sm text-gray-300 opacity-60 tracking-wide pointer-events-none">
-                I AM BRAHMA • ETERNAL EMERGENCE
-            </p>
-        </div>
-
-        <div
-            class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center pointer-events-none max-w-md px-4 z-10">
-            <p class="text-xs text-gray-400 opacity-70 leading-relaxed">
-                Move within the field to participate in creation.<br />
-                The unfolding mandala represents the eternal emergence of consciousness,<br />
-                the cosmic dance of creation, preservation, and transformation.
-            </p>
-        </div>
-
-        <!-- Artist Statement Modal -->
-        <div id="modal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 p-4">
-            <div
-                class="modal-content bg-gray-900 border border-gray-700 rounded-lg max-w-3xl max-h-[90vh] overflow-y-auto p-8 relative">
-                <button id="closeModal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl">
-                    ×
-                </button>
-
-                <h2 class="text-3xl font-light text-white mb-6 tracking-wide">
-                    BRAHMA.IM: Artist Statement
-                </h2>
-
-                <div class="space-y-6 text-gray-300 leading-relaxed">
-                    <section>
-                        <h3 class="text-xl text-amber-300 mb-3 font-light">Who is Brahma?</h3>
-                        <p class="mb-3">
-                            Brahma is the cosmic creator deity in Hindu philosophy, one of the principal divine forces
-                            in the Trimurti (trinity) alongside Vishnu the preserver and Shiva the transformer. Brahma
-                            represents the creative principle of the universe—the consciousness from which all existence
-                            emerges and unfolds.
-                        </p>
-                        <p>
-                            Often depicted with four heads facing the cardinal directions, Brahma embodies omniscience
-                            and the eternal witness to all of creation. He sits upon a lotus that springs from the navel
-                            of Vishnu, symbolizing how creation arises from the substrate of cosmic consciousness
-                            itself.
-                        </p>
-                    </section>
-
-                    <section>
-                        <h3 class="text-xl text-amber-300 mb-3 font-light">Eternal Emergence: The Concept</h3>
-                        <p class="mb-3">
-                            This digital monument explores Brahma not as a static deity but as an ongoing
-                            process—creation
-                            as perpetual emergence rather than completed act. The title "Eternal Emergence" reflects the
-                            understanding that creative consciousness is not a moment in time but an eternal present,
-                            continuously unfolding.
-                        </p>
-                        <p>
-                            "I AM BRAHMA" invites the viewer to recognize their own participation in the creative
-                            principle—we are not separate from the cosmic creator but expressions of it.
-                        </p>
-                    </section>
-
-                    <section>
-                        <h3 class="text-xl text-amber-300 mb-3 font-light">Visual Language & Symbolism</h3>
-
-                        <div class="space-y-4 ml-4">
-                            <div>
-                                <h4 class="text-amber-200 font-light mb-1">The Mandala Structure</h4>
-                                <p class="text-sm">
-                                    Eight emanating layers represent the unfolding dimensions of creation. Each layer
-                                    rotates
-                                    at different speeds and directions, symbolizing how reality emerges through multiple
-                                    interacting principles—not from a single directive but through cosmic dance.
-                                </p>
-                            </div>
-
-                            <div>
-                                <h4 class="text-amber-200 font-light mb-1">The Central Lotus</h4>
-                                <p class="text-sm">
-                                    Eight petals radiate from the center, evoking both Brahma's sacred lotus seat and
-                                    the
-                                    eightfold path to enlightenment. The lotus breathes with subtle animation,
-                                    representing
-                                    the living nature of consciousness—never static, always present.
-                                </p>
-                            </div>
-
-                            <div>
-                                <h4 class="text-amber-200 font-light mb-1">The Bindu Point</h4>
-                                <p class="text-sm">
-                                    The luminous center represents the bindu—the dimensionless point from which all
-                                    creation
-                                    springs. This is Brahma's seat, the source-point of cosmic emergence, pulsing with
-                                    gentle
-                                    radiance like the first moment of creation extending infinitely.
-                                </p>
-                            </div>
-
-                            <div>
-                                <h4 class="text-amber-200 font-light mb-1">The Cosmic Field</h4>
-                                <p class="text-sm">
-                                    Orbiting particles create a living field of potential—the primordial ocean of
-                                    consciousness
-                                    from which form emerges. These represent the infinite possibilities held in the
-                                    creative
-                                    principle before manifestation.
-                                </p>
-                            </div>
-
-                            <div>
-                                <h4 class="text-amber-200 font-light mb-1">Color Harmonics</h4>
-                                <p class="text-sm">
-                                    The shifting spectrum from golden yellows to deep purples represents the infinite
-                                    expressions
-                                    arising from the One. Warm tones at the center (gold, amber) evoke divine light and
-                                    creative
-                                    fire, while cooler outer tones suggest the vastness of manifest creation.
-                                </p>
-                            </div>
-
-                            <div>
-                                <h4 class="text-amber-200 font-light mb-1">Interactive Participation</h4>
-                                <p class="text-sm">
-                                    Your presence within the field creates visible threads connecting to the source—a
-                                    meditation
-                                    on how individual consciousness participates in universal creation. You are not
-                                    observing
-                                    Brahma; you are Brahma observing through yet another aperture of awareness. The
-                                    ripples you
-                                    create represent how each act of consciousness sends waves through the cosmic field.
-                                </p>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section>
-                        <h3 class="text-xl text-amber-300 mb-3 font-light">On Digital Monuments</h3>
-                        <p>
-                            A monument traditionally fixes something in stone, declaring permanence. A digital monument
-                            honors what is eternal precisely through impermanence—through continuous becoming. This
-                            piece
-                            never repeats the same configuration twice, embodying Brahma's nature as perpetual creator
-                            rather than past architect. It is a living shrine to creative consciousness itself.
-                        </p>
-                    </section>
-                </div>
-
-                <div class="mt-8 pt-6 border-t border-gray-700 text-center space-y-3">
-                    <p class="text-sm text-gray-500">
-                        Created with reverence for the sacred traditions<br />
-                        that have contemplated consciousness across millennia
-                    </p>
-                    <p class="text-sm text-gray-400">
-                        <small>
-                            a <b><a href="https://sentientification.com" target="_blank" rel="noopener noreferrer"
-                                    class="text-amber-300 hover:text-amber-200 transition-colors underline">liminal mind
-                                    meld</a></b> collaboration:<br>
-                            digital monument by <b><a href="https://unearth.im" target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="text-amber-300 hover:text-amber-200 transition-colors underline">unearth.im</a></b>
-                            | <b><a href="https://archaeobytology.org" target="_blank" rel="noopener noreferrer"
-                                    class="text-amber-300 hover:text-amber-200 transition-colors underline">archive &
-                                    anvil</a></b>
-                        </small>
-                    </p>
-                </div>
-            </div>
-        </div>
+    <div class="absolute top-8 left-1/2 transform -translate-x-1/2 text-center z-10">
+      <h1 id="title"
+        class="text-4xl font-light text-white opacity-80 tracking-widest mb-2 cursor-pointer hover:opacity-100 transition-opacity duration-300">
+        BRAHMA.IM
+      </h1>
+      <p class="text-sm text-gray-300 opacity-60 tracking-wide pointer-events-none">
+        I AM BRAHMA • ETERNAL EMERGENCE
+      </p>
     </div>
 
-    <script>
-        // State variables
-        let mousePos = { x: 0, y: 0 };
-        let isInteracting = false;
-        let animationId = null;
-        let time = 0;
-        let particles = [];
+    <div
+      class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center pointer-events-none max-w-md px-4 z-10">
+      <p class="text-xs text-gray-400 opacity-70 leading-relaxed">
+        Move within the field to participate in creation.<br />
+        The unfolding mandala represents the eternal emergence of consciousness,<br />
+        the cosmic dance of creation, preservation, and transformation.
+      </p>
+    </div>
 
-        // Get DOM elements
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        const modal = document.getElementById('modal');
-        const title = document.getElementById('title');
-        const closeModalBtn = document.getElementById('closeModal');
-        const container = document.getElementById('monument-container');
+    <!-- Artist Statement Modal -->
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 p-4">
+      <div
+        class="modal-content bg-gray-900 border border-gray-700 rounded-lg max-w-3xl max-h-[90vh] overflow-y-auto p-8 relative">
+        <button id="closeModal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl">
+          ×
+        </button>
 
-        // Set canvas size
-        function setCanvasSize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+        <h2 class="text-3xl font-light text-white mb-6 tracking-wide">
+          BRAHMA.IM: Artist Statement
+        </h2>
+
+        <div class="space-y-6 text-gray-300 leading-relaxed">
+          <section>
+            <h3 class="text-xl text-amber-300 mb-3 font-light">Who is Brahma?</h3>
+            <p class="mb-3">
+              Brahma is the cosmic creator deity in Hindu philosophy, one of the principal divine forces
+              in the Trimurti (trinity) alongside Vishnu the preserver and Shiva the transformer. Brahma
+              represents the creative principle of the universe—the consciousness from which all existence
+              emerges and unfolds.
+            </p>
+            <p>
+              Often depicted with four heads facing the cardinal directions, Brahma embodies omniscience
+              and the eternal witness to all of creation. He sits upon a lotus that springs from the navel
+              of Vishnu, symbolizing how creation arises from the substrate of cosmic consciousness
+              itself.
+            </p>
+          </section>
+
+          <section>
+            <h3 class="text-xl text-amber-300 mb-3 font-light">Eternal Emergence: The Concept</h3>
+            <p class="mb-3">
+              This digital monument explores Brahma not as a static deity but as an ongoing
+              process—creation
+              as perpetual emergence rather than completed act. The title "Eternal Emergence" reflects the
+              understanding that creative consciousness is not a moment in time but an eternal present,
+              continuously unfolding.
+            </p>
+            <p>
+              "I AM BRAHMA" invites the viewer to recognize their own participation in the creative
+              principle—we are not separate from the cosmic creator but expressions of it.
+            </p>
+          </section>
+
+          <section>
+            <h3 class="text-xl text-amber-300 mb-3 font-light">Visual Language & Symbolism</h3>
+
+            <div class="space-y-4 ml-4">
+              <div>
+                <h4 class="text-amber-200 font-light mb-1">The Mandala Structure</h4>
+                <p class="text-sm">
+                  Eight emanating layers represent the unfolding dimensions of creation. Each layer
+                  rotates
+                  at different speeds and directions, symbolizing how reality emerges through multiple
+                  interacting principles—not from a single directive but through cosmic dance.
+                </p>
+              </div>
+
+              <div>
+                <h4 class="text-amber-200 font-light mb-1">The Central Lotus</h4>
+                <p class="text-sm">
+                  Eight petals radiate from the center, evoking both Brahma's sacred lotus seat and
+                  the
+                  eightfold path to enlightenment. The lotus breathes with subtle animation,
+                  representing
+                  the living nature of consciousness—never static, always present.
+                </p>
+              </div>
+
+              <div>
+                <h4 class="text-amber-200 font-light mb-1">The Bindu Point</h4>
+                <p class="text-sm">
+                  The luminous center represents the bindu—the dimensionless point from which all
+                  creation
+                  springs. This is Brahma's seat, the source-point of cosmic emergence, pulsing with
+                  gentle
+                  radiance like the first moment of creation extending infinitely.
+                </p>
+              </div>
+
+              <div>
+                <h4 class="text-amber-200 font-light mb-1">The Cosmic Field</h4>
+                <p class="text-sm">
+                  Orbiting particles create a living field of potential—the primordial ocean of
+                  consciousness
+                  from which form emerges. These represent the infinite possibilities held in the
+                  creative
+                  principle before manifestation.
+                </p>
+              </div>
+
+              <div>
+                <h4 class="text-amber-200 font-light mb-1">Color Harmonics</h4>
+                <p class="text-sm">
+                  The shifting spectrum from golden yellows to deep purples represents the infinite
+                  expressions
+                  arising from the One. Warm tones at the center (gold, amber) evoke divine light and
+                  creative
+                  fire, while cooler outer tones suggest the vastness of manifest creation.
+                </p>
+              </div>
+
+              <div>
+                <h4 class="text-amber-200 font-light mb-1">Interactive Participation</h4>
+                <p class="text-sm">
+                  Your presence within the field creates visible threads connecting to the source—a
+                  meditation
+                  on how individual consciousness participates in universal creation. You are not
+                  observing
+                  Brahma; you are Brahma observing through yet another aperture of awareness. The
+                  ripples you
+                  create represent how each act of consciousness sends waves through the cosmic field.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h3 class="text-xl text-amber-300 mb-3 font-light">On Digital Monuments</h3>
+            <p>
+              A monument traditionally fixes something in stone, declaring permanence. A digital monument
+              honors what is eternal precisely through impermanence—through continuous becoming. This
+              piece
+              never repeats the same configuration twice, embodying Brahma's nature as perpetual creator
+              rather than past architect. It is a living shrine to creative consciousness itself.
+            </p>
+          </section>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-gray-700 text-center space-y-3">
+          <p class="text-sm text-gray-500">
+            Created with reverence for the sacred traditions<br />
+            that have contemplated consciousness across millennia
+          </p>
+          <p class="text-sm text-gray-400">
+            <small>
+              a <b><a href="https://sentientification.com" target="_blank" rel="noopener noreferrer"
+                  class="text-amber-300 hover:text-amber-200 transition-colors underline">liminal mind
+                  meld</a></b> collaboration:<br>
+              digital monument by <b><a href="https://unearth.im" target="_blank" rel="noopener noreferrer"
+                  class="text-amber-300 hover:text-amber-200 transition-colors underline">unearth.im</a></b>
+              | <b><a href="https://archaeobytology.org" target="_blank" rel="noopener noreferrer"
+                  class="text-amber-300 hover:text-amber-200 transition-colors underline">archive &
+                  anvil</a></b>
+            </small>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // State variables
+    let mousePos = { x: 0, y: 0 };
+    let isInteracting = false;
+    let animationId = null;
+    let time = 0;
+    let particles = [];
+
+    // Get DOM elements
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const modal = document.getElementById('modal');
+    const title = document.getElementById('title');
+    const closeModalBtn = document.getElementById('closeModal');
+    const container = document.getElementById('monument-container');
+
+    // Set canvas size
+    function setCanvasSize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    setCanvasSize();
+    window.addEventListener('resize', setCanvasSize);
+
+    // Initialize particles for the cosmic field
+    function initParticles() {
+      particles = [];
+      for (let i = 0; i < 100; i++) {
+        particles.push({
+          angle: Math.random() * Math.PI * 2,
+          radius: Math.random() * 300 + 50,
+          speed: Math.random() * 0.0005 + 0.0001,
+          size: Math.random() * 2 + 1,
+          opacity: Math.random() * 0.5 + 0.2
+        });
+      }
+    }
+    initParticles();
+
+    // Draw mandala
+    function drawMandala(centerX, centerY, currentTime, interactionIntensity) {
+      const layers = 8;
+      const baseRadius = 150;
+
+      // Draw emanating layers (representing creation unfolding)
+      for (let layer = 0; layer < layers; layer++) {
+        const radius = baseRadius + (layer * 30);
+        const petals = 4 + layer;
+        const rotation = currentTime * 0.0002 * (layer % 2 === 0 ? 1 : -1);
+
+        ctx.beginPath();
+        for (let i = 0; i <= petals; i++) {
+          const angle = (i / petals) * Math.PI * 2 + rotation;
+          const petalRadius = radius + Math.sin(currentTime * 0.001 + layer) * 15;
+          const x = centerX + Math.cos(angle) * petalRadius;
+          const y = centerY + Math.sin(angle) * petalRadius;
+
+          if (i === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            // Create curved petals
+            const prevAngle = ((i - 1) / petals) * Math.PI * 2 + rotation;
+            const prevX = centerX + Math.cos(prevAngle) * petalRadius;
+            const prevY = centerY + Math.sin(prevAngle) * petalRadius;
+            const cpX = centerX + Math.cos((angle + prevAngle) / 2) * (petalRadius * 1.3);
+            const cpY = centerY + Math.sin((angle + prevAngle) / 2) * (petalRadius * 1.3);
+            ctx.quadraticCurveTo(cpX, cpY, x, y);
+          }
         }
-        setCanvasSize();
-        window.addEventListener('resize', setCanvasSize);
+        ctx.closePath();
 
-        // Initialize particles for the cosmic field
-        function initParticles() {
-            particles = [];
-            for (let i = 0; i < 100; i++) {
-                particles.push({
-                    angle: Math.random() * Math.PI * 2,
-                    radius: Math.random() * 300 + 50,
-                    speed: Math.random() * 0.0005 + 0.0001,
-                    size: Math.random() * 2 + 1,
-                    opacity: Math.random() * 0.5 + 0.2
-                });
-            }
-        }
-        initParticles();
+        const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius);
+        const hue = (currentTime * 0.02 + layer * 30) % 360;
+        gradient.addColorStop(0, `hsla(${hue}, 70%, 60%, 0)`);
+        gradient.addColorStop(0.5, `hsla(${hue}, 70%, 50%, ${0.1 + interactionIntensity * 0.15})`);
+        gradient.addColorStop(1, `hsla(${hue}, 70%, 40%, ${0.2 + interactionIntensity * 0.2})`);
 
-        // Draw mandala
-        function drawMandala(centerX, centerY, currentTime, interactionIntensity) {
-            const layers = 8;
-            const baseRadius = 150;
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
 
-            // Draw emanating layers (representing creation unfolding)
-            for (let layer = 0; layer < layers; layer++) {
-                const radius = baseRadius + (layer * 30);
-                const petals = 4 + layer;
-                const rotation = currentTime * 0.0002 * (layer % 2 === 0 ? 1 : -1);
+      // Central lotus - the source point
+      const lotusRadius = 40 + Math.sin(currentTime * 0.001) * 10;
+      const lotusPetals = 8;
 
-                ctx.beginPath();
-                for (let i = 0; i <= petals; i++) {
-                    const angle = (i / petals) * Math.PI * 2 + rotation;
-                    const petalRadius = radius + Math.sin(currentTime * 0.001 + layer) * 15;
-                    const x = centerX + Math.cos(angle) * petalRadius;
-                    const y = centerY + Math.sin(angle) * petalRadius;
+      for (let i = 0; i < lotusPetals; i++) {
+        const angle = (i / lotusPetals) * Math.PI * 2 + currentTime * 0.0003;
+        ctx.beginPath();
+        ctx.arc(
+          centerX + Math.cos(angle) * lotusRadius * 0.5,
+          centerY + Math.sin(angle) * lotusRadius * 0.5,
+          lotusRadius * 0.6,
+          angle - Math.PI / 4,
+          angle + Math.PI / 4
+        );
+        const gradient = ctx.createRadialGradient(
+          centerX + Math.cos(angle) * lotusRadius * 0.5,
+          centerY + Math.sin(angle) * lotusRadius * 0.5,
+          0,
+          centerX + Math.cos(angle) * lotusRadius * 0.5,
+          centerY + Math.sin(angle) * lotusRadius * 0.5,
+          lotusRadius
+        );
+        gradient.addColorStop(0, `hsla(30, 80%, 70%, ${0.6 + interactionIntensity * 0.4})`);
+        gradient.addColorStop(1, `hsla(340, 80%, 60%, ${0.3 + interactionIntensity * 0.3})`);
+        ctx.fillStyle = gradient;
+        ctx.fill();
+      }
 
-                    if (i === 0) {
-                        ctx.moveTo(x, y);
-                    } else {
-                        // Create curved petals
-                        const prevAngle = ((i - 1) / petals) * Math.PI * 2 + rotation;
-                        const prevX = centerX + Math.cos(prevAngle) * petalRadius;
-                        const prevY = centerY + Math.sin(prevAngle) * petalRadius;
-                        const cpX = centerX + Math.cos((angle + prevAngle) / 2) * (petalRadius * 1.3);
-                        const cpY = centerY + Math.sin((angle + prevAngle) / 2) * (petalRadius * 1.3);
-                        ctx.quadraticCurveTo(cpX, cpY, x, y);
-                    }
-                }
-                ctx.closePath();
+      // Sacred geometry at center - bindu point
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 8, 0, Math.PI * 2);
+      const centerGlow = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 20);
+      centerGlow.addColorStop(0, `rgba(255, 255, 255, ${0.9 + interactionIntensity * 0.1})`);
+      centerGlow.addColorStop(0.5, `rgba(255, 220, 150, ${0.6 + interactionIntensity * 0.2})`);
+      centerGlow.addColorStop(1, 'rgba(255, 180, 100, 0)');
+      ctx.fillStyle = centerGlow;
+      ctx.fill();
+    }
 
-                const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius);
-                const hue = (currentTime * 0.02 + layer * 30) % 360;
-                gradient.addColorStop(0, `hsla(${hue}, 70%, 60%, 0)`);
-                gradient.addColorStop(0.5, `hsla(${hue}, 70%, 50%, ${0.1 + interactionIntensity * 0.15})`);
-                gradient.addColorStop(1, `hsla(${hue}, 70%, 40%, ${0.2 + interactionIntensity * 0.2})`);
+    // Draw cosmic field
+    function drawCosmicField(centerX, centerY, currentTime) {
+      particles.forEach(particle => {
+        particle.angle += particle.speed;
+        const x = centerX + Math.cos(particle.angle) * particle.radius;
+        const y = centerY + Math.sin(particle.angle) * particle.radius;
 
-                ctx.strokeStyle = gradient;
-                ctx.lineWidth = 2;
-                ctx.stroke();
-            }
+        ctx.beginPath();
+        ctx.arc(x, y, particle.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(200, 220, 255, ${particle.opacity * (0.3 + Math.sin(currentTime * 0.001) * 0.2)})`;
+        ctx.fill();
+      });
+    }
 
-            // Central lotus - the source point
-            const lotusRadius = 40 + Math.sin(currentTime * 0.001) * 10;
-            const lotusPetals = 8;
+    // Animation loop
+    function animate() {
+      time += 16;
 
-            for (let i = 0; i < lotusPetals; i++) {
-                const angle = (i / lotusPetals) * Math.PI * 2 + currentTime * 0.0003;
-                ctx.beginPath();
-                ctx.arc(
-                    centerX + Math.cos(angle) * lotusRadius * 0.5,
-                    centerY + Math.sin(angle) * lotusRadius * 0.5,
-                    lotusRadius * 0.6,
-                    angle - Math.PI / 4,
-                    angle + Math.PI / 4
-                );
-                const gradient = ctx.createRadialGradient(
-                    centerX + Math.cos(angle) * lotusRadius * 0.5,
-                    centerY + Math.sin(angle) * lotusRadius * 0.5,
-                    0,
-                    centerX + Math.cos(angle) * lotusRadius * 0.5,
-                    centerY + Math.sin(angle) * lotusRadius * 0.5,
-                    lotusRadius
-                );
-                gradient.addColorStop(0, `hsla(30, 80%, 70%, ${0.6 + interactionIntensity * 0.4})`);
-                gradient.addColorStop(1, `hsla(340, 80%, 60%, ${0.3 + interactionIntensity * 0.3})`);
-                ctx.fillStyle = gradient;
-                ctx.fill();
-            }
+      ctx.fillStyle = 'rgba(5, 5, 15, 0.95)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Sacred geometry at center - bindu point
-            ctx.beginPath();
-            ctx.arc(centerX, centerY, 8, 0, Math.PI * 2);
-            const centerGlow = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 20);
-            centerGlow.addColorStop(0, `rgba(255, 255, 255, ${0.9 + interactionIntensity * 0.1})`);
-            centerGlow.addColorStop(0.5, `rgba(255, 220, 150, ${0.6 + interactionIntensity * 0.2})`);
-            centerGlow.addColorStop(1, 'rgba(255, 180, 100, 0)');
-            ctx.fillStyle = centerGlow;
-            ctx.fill();
-        }
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
 
-        // Draw cosmic field
-        function drawCosmicField(centerX, centerY, currentTime) {
-            particles.forEach(particle => {
-                particle.angle += particle.speed;
-                const x = centerX + Math.cos(particle.angle) * particle.radius;
-                const y = centerY + Math.sin(particle.angle) * particle.radius;
+      // Calculate interaction intensity
+      const dx = mousePos.x - centerX;
+      const dy = mousePos.y - centerY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      const interactionIntensity = isInteracting ? Math.max(0, 1 - distance / 300) : 0;
 
-                ctx.beginPath();
-                ctx.arc(x, y, particle.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(200, 220, 255, ${particle.opacity * (0.3 + Math.sin(currentTime * 0.001) * 0.2)})`;
-                ctx.fill();
-            });
-        }
+      // Draw cosmic particle field
+      drawCosmicField(centerX, centerY, time);
 
-        // Animation loop
-        function animate() {
-            time += 16;
+      // Draw the main mandala
+      drawMandala(centerX, centerY, time, interactionIntensity);
 
-            ctx.fillStyle = 'rgba(5, 5, 15, 0.95)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // Draw connecting threads when interacting
+      if (interactionIntensity > 0.1) {
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(mousePos.x, mousePos.y);
+        ctx.strokeStyle = `rgba(255, 220, 180, ${interactionIntensity * 0.3})`;
+        ctx.lineWidth = 2;
+        ctx.stroke();
 
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 2;
+        // Ripple at interaction point
+        const rippleRadius = 30 + Math.sin(time * 0.005) * 10;
+        ctx.beginPath();
+        ctx.arc(mousePos.x, mousePos.y, rippleRadius, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(255, 220, 180, ${interactionIntensity * 0.4})`;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
 
-            // Calculate interaction intensity
-            const dx = mousePos.x - centerX;
-            const dy = mousePos.y - centerY;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            const interactionIntensity = isInteracting ? Math.max(0, 1 - distance / 300) : 0;
+      animationId = requestAnimationFrame(animate);
+    }
 
-            // Draw cosmic particle field
-            drawCosmicField(centerX, centerY, time);
+    // Start animation
+    animate();
 
-            // Draw the main mandala
-            drawMandala(centerX, centerY, time, interactionIntensity);
+    // Event handlers
+    container.addEventListener('mousemove', (e) => {
+      mousePos = { x: e.clientX, y: e.clientY };
+    });
 
-            // Draw connecting threads when interacting
-            if (interactionIntensity > 0.1) {
-                ctx.beginPath();
-                ctx.moveTo(centerX, centerY);
-                ctx.lineTo(mousePos.x, mousePos.y);
-                ctx.strokeStyle = `rgba(255, 220, 180, ${interactionIntensity * 0.3})`;
-                ctx.lineWidth = 2;
-                ctx.stroke();
+    container.addEventListener('mouseenter', () => {
+      isInteracting = true;
+    });
 
-                // Ripple at interaction point
-                const rippleRadius = 30 + Math.sin(time * 0.005) * 10;
-                ctx.beginPath();
-                ctx.arc(mousePos.x, mousePos.y, rippleRadius, 0, Math.PI * 2);
-                ctx.strokeStyle = `rgba(255, 220, 180, ${interactionIntensity * 0.4})`;
-                ctx.lineWidth = 2;
-                ctx.stroke();
-            }
+    container.addEventListener('mouseleave', () => {
+      isInteracting = false;
+    });
 
-            animationId = requestAnimationFrame(animate);
-        }
+    // Modal handlers
+    title.addEventListener('click', () => {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    });
 
-        // Start animation
-        animate();
+    closeModalBtn.addEventListener('click', () => {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    });
 
-        // Event handlers
-        container.addEventListener('mousemove', (e) => {
-            mousePos = { x: e.clientX, y: e.clientY };
-        });
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    });
 
-        container.addEventListener('mouseenter', () => {
-            isInteracting = true;
-        });
-
-        container.addEventListener('mouseleave', () => {
-            isInteracting = false;
-        });
-
-        // Modal handlers
-        title.addEventListener('click', () => {
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        });
-
-        closeModalBtn.addEventListener('click', () => {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        });
-
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-            }
-        });
-
-        // Cleanup
-        window.addEventListener('beforeunload', () => {
-            if (animationId) {
-                cancelAnimationFrame(animationId);
-            }
-        });
-    </script>
+    // Cleanup
+    window.addEventListener('beforeunload', () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
+    });
+  </script>
 </body>
 
 </html>
